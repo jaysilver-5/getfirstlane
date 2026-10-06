@@ -14,7 +14,7 @@ if (production) {
   const issues = releaseIssues();
   if (issues.length) { console.error('Production build blocked.\n'+issues.map(x=>'• '+x).join('\n')+'\nRun npm run build:local for local design review.'); process.exit(1); }
 }
-if (config.price?.amount !== 14.99 || config.price?.currency !== 'CAD' || config.price?.type !== 'one_time') throw new Error('Lane’s approved price must be CAD 14.99, one-time.');
+if (config.price?.amount !== 14.99 || config.price?.currency !== 'CAD' || config.price?.type !== 'one_time') throw new Error('FirstLane’s approved price must be CAD 14.99, one-time.');
 rmSync(out,{recursive:true,force:true}); mkdirSync(out,{recursive:true});
 cpSync(path.join(root,'public'),out,{recursive:true});
 const write = (name,contents) => writeFileSync(path.join(out,name),contents);
@@ -25,18 +25,18 @@ const hashed = (name,extension,body) => {
 const assets = {
  css: hashed('styles','css',readFileSync(path.join(root,'public/assets/styles.css'),'utf8')),
  js: hashed('app','js',readFileSync(path.join(root,'public/assets/app.js'),'utf8')),
- config: hashed('site','js','window.LANE = Object.freeze('+JSON.stringify(publicConfig()).replace(/</g,'\\u003c')+');\n')
+ config: hashed('site','js','window.FIRSTLANE = Object.freeze('+JSON.stringify(publicConfig()).replace(/</g,'\\u003c')+');\n')
 };
 // Do not publish duplicate unversioned executable assets.
 rmSync(path.join(out,'assets/styles.css')); rmSync(path.join(out,'assets/app.js'));
 const definitions = [
- ['', 'Lane — Your G1. A clearer road ahead.', 'A calmer way to prepare for your Ontario G1. Start with 40 free questions in the app. Unlock Ontario G1 Complete for CA$14.99, once.', home],
- ['privacy','Privacy policy — Lane','How Lane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
- ['terms','Terms of service — Lane','Terms for Lane’s independent Ontario G1 preparation app and CA$14.99 one-time Ontario purchase.',pages.terms],
- ['support','Support — Lane','Get help with your Lane account, purchase restoration, practice questions, privacy or deletion.',pages.support],
- ['delete-account','Delete your Lane account','Verify ownership and request permanent deletion of your Lane account without reinstalling the app.',pages.deletion],
- ['cookies','Cookies & preferences — Lane','Manage website motion preferences and understand the limited storage used on the Lane website.',pages.cookies],
- ['404','Page not found — Lane','This page is not here. Return to Lane and find your way forward.',pages.notFound]
+ ['', 'FirstLane — Get road ready.', 'A calmer way to prepare for your Ontario G1. Start with 40 free questions in FirstLane and unlock Ontario G1 Complete for CA$14.99, once.', home],
+ ['privacy','Privacy policy — FirstLane','How FirstLane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
+ ['terms','Terms of service — FirstLane','Terms for FirstLane’s independent Ontario G1 preparation app and CA$14.99 one-time Ontario purchase.',pages.terms],
+ ['support','Support — FirstLane','Get help with your FirstLane account, purchase restoration, practice questions, privacy or deletion.',pages.support],
+ ['delete-account','Delete your FirstLane account','Verify ownership and request permanent deletion of your FirstLane account without reinstalling the app.',pages.deletion],
+ ['cookies','Cookies & preferences — FirstLane','Manage website motion preferences and understand the limited storage used on the FirstLane website.',pages.cookies],
+ ['404','Page not found — FirstLane','This page is not here. Return to FirstLane and get road ready.',pages.notFound]
 ];
 for (const [slug,title,description,render] of definitions) {
  let html = layout({title,description,body:render(),slug,active:slug,assets,noindex:!production||slug==='404'});

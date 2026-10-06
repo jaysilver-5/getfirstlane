@@ -6,7 +6,7 @@ The frontend is static HTML/CSS/JavaScript. Only the two same-origin Node endpoi
 
 ```text
 Browser → POST /api/support → Turnstile verification → Resend → monitored support mailbox
-Browser → POST /api/account → Turnstile / Supabase Auth → existing Lane delete-account Edge Function
+Browser → POST /api/account → Turnstile / Supabase Auth → existing FirstLane delete-account Edge Function
 ```
 
 There is no website checkout, general user dashboard, account-signup flow, server database or analytics SDK. No Supabase service-role key belongs in this website. The original privileged account-delete operation remains in the existing authenticated Edge Function.
@@ -16,7 +16,7 @@ There is no website checkout, general user dashboard, account-signup flow, serve
 | Variable | Meaning |
 |---|---|
 | `SITE_ORIGIN` | Exact HTTPS origin; must match `site.config.json.siteUrl`. Used for strict Origin validation and captcha hostname checks. |
-| `SUPABASE_URL` | Lane's existing production or isolated staging project HTTPS URL. |
+| `SUPABASE_URL` | FirstLane's existing production or isolated staging project HTTPS URL. |
 | `SUPABASE_PUBLIC_KEY` | Publishable key or legacy `anon` JWT only. Secret/service-role keys are rejected. |
 | `TURNSTILE_SECRET_KEY` | Server-only secret matching the frontend site key. |
 | `RESEND_API_KEY` | Server-only send-email credential for the verified sender domain. |
@@ -29,13 +29,13 @@ Use separate staging and production origins/keys. Website server variables are n
 
 ## Supabase: email-code setup
 
-Use the same project that holds the actual Lane accounts. Confirm an email/password account can authenticate through the email OTP method before launch.
+Use the same project that holds the actual FirstLane accounts. Confirm an email/password account can authenticate through the email OTP method before launch.
 
 In Supabase authentication configuration, enable the email provider and configure a production-capable SMTP/email sender. In **Email Templates → Magic Link**, the message must contain `{{ .Token }}` so the user receives a code they can type. A minimal content example follows; brand and deliver it through your actual approved email setup:
 
 ```html
-<h2>Your Lane verification code</h2>
-<p>Enter this code on the Lane page you opened:</p>
+<h2>Your FirstLane verification code</h2>
+<p>Enter this code on the FirstLane page you opened:</p>
 <p><strong>{{ .Token }}</strong></p>
 <p>Verifying your email does not delete your account. You must confirm deletion on the website separately.</p>
 <p>Never share this code with support. Ignore this message if you did not request it.</p>
@@ -74,7 +74,7 @@ After the check, the adapter calls the existing **`/functions/v1/delete-account`
 
 The existing Edge Function verifies the user then calls Supabase Admin `deleteUser`. Its linked database schema cascades profile, synced progress, reports, access-grant and transaction rows. **The source also contains raw commerce-event JSON and refund records that do not all disappear through that cascade. It does not demonstrate RevenueCat customer deletion or a complete processor-cleanup workflow.**
 
-Before marking deletion accepted, audit `lane_private.commerce_events.payload`, refund/tombstone records, RevenueCat account identifiers, email-provider logs, backup expiry and any new telemetry/CRM. Implement deletion/anonymisation or a genuinely necessary, minimised, time-limited retention process. A generic “legal obligations” sentence does not justify keeping all raw personal data indefinitely.
+Before marking deletion accepted, audit `firstlane_private.commerce_events.payload`, refund/tombstone records, RevenueCat account identifiers, email-provider logs, backup expiry and any new telemetry/CRM. Implement deletion/anonymisation or a genuinely necessary, minimised, time-limited retention process. A generic “legal obligations” sentence does not justify keeping all raw personal data indefinitely.
 
 The website explains limited retained records, but those limits must be specified, implemented and reviewed. The `retention` configuration supplies the policy text; it does **not** create scheduled database/provider cleanup jobs. No production deletion, provider cleanup or retention job was run during this handoff.
 

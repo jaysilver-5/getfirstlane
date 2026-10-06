@@ -1,5 +1,5 @@
 import { HttpError, reply, validateOrigin, readJson, emailValue, configRequired, publicSupabaseKey, outbound, verifyCaptcha, bearer, safeError } from '../lib/http.mjs';
-/** Web adapter for Lane's EXISTING authenticated delete-account Edge Function.
+/** Web adapter for FirstLane's existing authenticated delete-account Edge Function.
  * No table guesses, service-role keys, client-supplied user IDs or fake successful deletes.
  * Supply dependencies in tests; Vercel invokes the default export with real environment/fetch. */
 export function createAccountHandler({ env = process.env, fetcher = fetch, now = () => Date.now() } = {}) {

@@ -1,18 +1,19 @@
-# Lane website launch acceptance
+# FirstLane website launch acceptance
 
-Date of handoff: 6 October 2026. Owner fields below are deliberately unfilled. Record the actual reviewer, date, environment and evidence in your release ticket; the booleans in `site.config.json` only record that acceptance happened.
+Date of handoff: 7 October 2026. The official FirstLane origin is configured; other owner fields remain deliberately unfilled. Record the actual reviewer, date, environment and evidence in your release ticket; the booleans in `site.config.json` only record that acceptance happened.
 
 ## 1. Owner-supplied facts
 
 | Configuration | Required decision / evidence |
 |---|---|
-| `siteUrl` | Final HTTPS origin, e.g. your actual owned domain, without a trailing slash. Never use the synthetic test fixture domain. |
-| `operatorLegalName` | Exact registered entity operating Lane; confirm spelling against company records. `operatorDisplayName` is only the public brand credit. |
+| `brand`, `tagline` | Locked to `FirstLane` and `Get road ready.` |
+| `siteUrl` | Configured as the official origin: `https://getfirstlane.com` (without a trailing slash). |
+| `operatorLegalName` | Exact registered entity operating FirstLane; confirm spelling against company records. `operatorDisplayName` is only the public brand credit. |
 | `businessAddress` | Real business/privacy correspondence address appropriate for publication. |
 | `publisherLegalName` | Actual entity appearing on store listings and receipts. |
 | `publisherDisclosure` | Reviewed, plain-language explanation of operator/publisher responsibilities. Use the same entity when it genuinely fills both roles. |
 | `supportEmail`, `privacyEmail` | Real, monitored mailboxes. Test delivery and responses. |
-| `appStoreUrl`, `googlePlayUrl` | Real Lane product listings. Not generic store homepages or guessed IDs. |
+| `appStoreUrl`, `googlePlayUrl` | Real FirstLane product listings. Not generic store homepages or guessed IDs. |
 | `providers.*` | Actual hosting, auth-email and support providers; actual processing locations. Resend is the implemented support adapter, not evidence that an account has been configured. |
 | `retention.*` | Verified operational retention limits and the legal/operational purpose of transaction retention. Do not choose convenient numbers without implementing them. |
 | `governingLaw` | Professionally reviewed wording preserving mandatory consumer rights. Do not assume a governing jurisdiction from the target market alone. |

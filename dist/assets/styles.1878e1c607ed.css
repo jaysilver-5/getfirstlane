@@ -22,3 +22,5 @@
 /* Keep row headings readable on small screens rather than squeezing words into slivers. */
 .data-table thead th:first-child{width:29%}.data-table th[scope="row"]{font-size:12px;overflow-wrap:normal;word-break:normal}
 @media(max-width:600px){.data-table thead th:first-child,.data-table th[scope="row"]{width:31%}.data-table th[scope="row"]{font-size:11px}}
+.brand{font-size:30px;letter-spacing:-1.8px;white-space:nowrap}
+@media(max-width:600px){.brand{font-size:24px;letter-spacing:-1.2px}}

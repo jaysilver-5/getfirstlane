@@ -1,44 +1,7 @@
 
-> lane-landing@1.0.0 build
-> node --env-file-if-exists=.env.local scripts/build.mjs --production
+> firstlane-landing@1.0.0 build
+> node --env-file-if-exists=.env.local scripts/build.mjs
 
-.env.local not found. Continuing without it.
-Production build blocked.
-• Set siteUrl to the real HTTPS origin, without a trailing slash.
-• Set appStoreUrl to Lane’s genuine apps.apple.com listing.
-• Set googlePlayUrl to Lane’s genuine play.google.com listing.
-• Complete operatorLegalName.
-• Complete businessAddress.
-• Complete publisherLegalName.
-• Complete publisherDisclosure.
-• Complete governingLaw.
-• Set a monitored supportEmail.
-• Set a monitored privacyEmail.
-• Confirm providers.websiteHost.
-• Confirm providers.authenticationEmail.
-• Confirm providers.processingCountries.
-• Set the actual retention.deletionDays; do not invent a deadline.
-• Set the actual retention.backupDays; do not invent a deadline.
-• Set the actual retention.securityLogDays; do not invent a deadline.
-• Set the actual retention.supportMonths; do not invent a deadline.
-• Set the actual retention.transactionYears; do not invent a deadline.
-• Set the actual retention.transactionPurpose; do not invent a deadline.
-• Set the actual retention.processorDeletionDays; do not invent a deadline.
-• Set a real Cloudflare Turnstile site key, not a testing key.
-• Record acceptance: approvals.legalPoliciesReviewed.
-• Record acceptance: approvals.operatorAndPublisherVerified.
-• Record acceptance: approvals.retentionAndProcessorsVerified.
-• Record acceptance: approvals.contentAndFeatureClaimsReviewed.
-• Record acceptance: approvals.nativePriceAndStoreLinksVerified.
-• Record acceptance: approvals.supportDeliveryTested.
-• Record acceptance: approvals.deletionEndToEndTested.
-• Record acceptance: approvals.rateLimitsAndMonitoringEnabled.
-• Record acceptance: approvals.nativePrivacyDisclosuresMatch.
-• Set server environment SUPABASE_URL.
-• Set server environment SUPABASE_PUBLIC_KEY.
-• Set server environment SITE_ORIGIN.
-• Set server environment RESEND_API_KEY.
-• Set server environment SUPPORT_FROM_EMAIL.
-• Set server environment SUPPORT_TO_EMAIL.
-• Set server environment TURNSTILE_SECRET_KEY.
-Run npm run build:local for local design review.
+Built 7 HTML pages and 10 assets into dist/.
+Mode: SAFE PRE-LAUNCH — no search indexing; missing live services fail safely.
+Offer: CA$14.99 one-time.

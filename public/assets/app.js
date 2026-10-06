@@ -1,12 +1,12 @@
 /* Progressive enhancement only: navigation, content and prices render without JavaScript. */
 (() => {
   'use strict';
-  const config = window.LANE || {};
+  const config = window.FIRSTLANE || {};
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   let userPaused = false;
-  try { userPaused = localStorage.getItem('lane.motion') === 'paused'; } catch { /* Storage is optional. */ }
+  try { userPaused = localStorage.getItem('firstlane.motion') === 'paused'; } catch { /* Storage is optional. */ }
   function updateMotion() {
     const paused = reduced.matches || userPaused;
     document.documentElement.classList.toggle('motion-paused', paused);
@@ -18,13 +18,13 @@
   }
   $$('.motion-control').forEach(button => button.addEventListener('click', () => {
     userPaused = !userPaused;
-    try { localStorage.setItem('lane.motion', userPaused ? 'paused' : 'playing'); } catch { /* Private browsing is supported. */ }
+    try { localStorage.setItem('firstlane.motion', userPaused ? 'paused' : 'playing'); } catch { /* Private browsing is supported. */ }
     updateMotion();
   }));
   reduced.addEventListener('change', updateMotion);
   updateMotion();
   $('#reset-preferences')?.addEventListener('click', () => {
-    try { localStorage.removeItem('lane.motion'); } catch { /* no-op */ }
+    try { localStorage.removeItem('firstlane.motion'); } catch { /* no-op */ }
     userPaused = false; updateMotion();
     $('#preferences-status').textContent = 'Your website preferences have been reset. Your device’s motion preference still applies.';
   });
@@ -92,7 +92,7 @@
       return data;
     } catch (error) {
       if (error.name === 'AbortError') throw new Error('The connection timed out. Please check your connection and try again.');
-      if (error instanceof TypeError) throw new Error('We couldn’t reach Lane. Check your connection and try again.');
+      if (error instanceof TypeError) throw new Error('We couldn’t reach FirstLane. Check your connection and try again.');
       throw error;
     } finally { clearTimeout(timeout); }
   }
@@ -116,7 +116,7 @@
     return captchaLoading;
   }
   async function ensureCaptcha(kind) {
-    if (!config.formsEnabled) throw new Error('This form is currently unavailable. Please try again later or use Help in the Lane app.');
+    if (!config.formsEnabled) throw new Error('This form is currently unavailable. Please try again later or use Help in the FirstLane app.');
     const turnstile = await loadCaptcha();
     if (!captchaWidgets.has(kind)) {
       const node = $(`[data-captcha="${kind}"]`);
@@ -144,7 +144,7 @@
   function prepareForm(form, kind, messageNode) {
     if (!form) return;
     if (!config.formsEnabled) {
-      status(messageNode, 'This form is currently unavailable. Please try again later or use Help in the Lane app.');
+      status(messageNode, 'This form is currently unavailable. Please try again later or use Help in the FirstLane app.');
       $('[type="submit"]', form).disabled = true;
       return;
     }
@@ -161,7 +161,7 @@
       const fields = new FormData(support);
       const data = await api('/api/support', { email: fields.get('email'), topic: fields.get('topic'), message: fields.get('message'), company: fields.get('company'), captchaToken: token });
       if (data.accepted !== true) throw new Error('Message delivery was not confirmed. Please try again.');
-      support.reset(); status(supportStatus, 'Your message has been accepted for delivery to Lane support. We’ll reply to the email address you provided.');
+      support.reset(); status(supportStatus, 'Your message has been accepted for delivery to FirstLane support. We’ll reply to the email address you provided.');
     } catch (error) { status(supportStatus, error.message, true); }
     finally { resetCaptcha('support'); busy(support, false); }
   });
@@ -218,7 +218,7 @@
       status(deleteStatus, 'Tick the confirmation and type DELETE exactly to continue.', true); return;
     }
     busy(confirmForm, true); $('#delete-cancel').disabled = true;
-    status(deleteStatus, 'Deleting your Lane account. Please keep this page open…');
+    status(deleteStatus, 'Deleting your FirstLane account. Please keep this page open…');
     try {
       const data = await api('/api/account', { action: 'delete', confirmation: 'DELETE' }, accessToken);
       if (data.deleted !== true) throw new Error('Account deletion was not confirmed. Contact support if you are unsure of your account status.');
@@ -236,7 +236,7 @@
   $('#delete-cancel')?.addEventListener('click', async () => {
     if (confirmForm.dataset.busy === 'true') return;
     await clearSession(); confirmForm.reset(); deletePanel('email'); $('#delete-email').focus();
-    status(deleteStatus, 'Deletion cancelled. Your Lane account has not been changed.');
+    status(deleteStatus, 'Deletion cancelled. Your FirstLane account has not been changed.');
   });
   window.addEventListener('pagehide', () => { accessToken = ''; accountEmail = ''; clearTimeout(expiryTimer); });
   window.addEventListener('pageshow', event => {

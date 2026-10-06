@@ -1,6 +1,6 @@
 {
-  "name": "lane-landing", "version": "1.0.0", "private": true, "type": "module",
-  "description": "Lane's responsive marketing, support and account-control website.",
+  "name": "firstlane-landing", "version": "1.0.0", "private": true, "type": "module",
+  "description": "FirstLane's responsive marketing, support and account-control website.",
   "engines": { "node": ">=22" },
   "scripts": {
     "dev": "node --env-file-if-exists=.env.local scripts/dev.mjs",

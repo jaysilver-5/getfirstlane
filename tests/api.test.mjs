@@ -4,7 +4,7 @@ import {createAccountHandler} from '../api/account.js';
 import {createSupportHandler} from '../api/support.js';
 import {readJson,publicSupabaseKey} from '../lib/http.mjs';
 import {NOW,env,json,captcha,fetchSequence,token,invoke} from './helpers.mjs';
-const send={action:'send-code',email:'learner@lane-learning.ca',captchaToken:'solved-captcha'};
+const send={action:'send-code',email:'learner@getfirstlane.com',captchaToken:'solved-captcha'};
 const supportBody={email:send.email,topic:'account',message:'Please help me restore my account.',captchaToken:'solved-captcha'};
 const account=(mock,extra={})=>createAccountHandler({env,now:()=>NOW,...mock,...extra});
 const support=(mock,extra={})=>createSupportHandler({env,now:()=>NOW,...mock,...extra});
@@ -23,7 +23,7 @@ test('invalid captcha action or hostname blocks provider calls',async()=>{for(co
 test('provider rate limit is not presented as success',async()=>{const m=fetchSequence(captcha(),json({},429));assert.equal((await invoke(account(m),send)).statusCode,429);});
 test('code-service outage is not presented as success',async()=>{const m=fetchSequence(captcha(),json({secret:'internal'},500));const r=await invoke(account(m),send);assert.equal(r.statusCode,503);assert.ok(!JSON.stringify(r.data).includes('internal'));});
 test('verification only returns the access token, never refresh token',async()=>{const m=fetchSequence(json({access_token:token(),refresh_token:'DO_NOT_RETURN',user:{email:send.email}}));const r=await invoke(account(m),{action:'verify-code',email:send.email,code:'123456'});assert.equal(r.data.verified,true);assert.equal(r.data.accessToken,token());assert.equal(JSON.parse(m.calls[0][1].body).type,'email');assert.ok(!JSON.stringify(r.data).includes('DO_NOT_RETURN'));});
-test('wrong-code, wrong-email and incomplete verification fail',async()=>{for(const result of [{},{access_token:token(),user:{email:'someone-else@lane-learning.ca'}}]){const m=fetchSequence(json(result));assert.equal((await invoke(account(m),{action:'verify-code',email:send.email,code:'123456'})).statusCode,401);}});
+test('wrong-code, wrong-email and incomplete verification fail',async()=>{for(const result of [{},{access_token:token(),user:{email:'someone-else@getfirstlane.com'}}]){const m=fetchSequence(json(result));assert.equal((await invoke(account(m),{action:'verify-code',email:send.email,code:'123456'})).statusCode,401);}});
 test('non-numeric codes fail before network calls',async()=>assert.equal((await invoke(account({}),{action:'verify-code',email:send.email,code:'abcd12'})).statusCode,400));
 test('deletion requires bearer and explicit DELETE confirmation',async()=>{assert.equal((await invoke(account({}),{action:'delete',confirmation:'DELETE'})).statusCode,401);assert.equal((await invoke(account({}),{action:'delete'},authorized())).statusCode,400);});
 test('deletion validates identity before calling Edge Function',async()=>{const m=fetchSequence(identity(),json({deleted:true}));const r=await invoke(account(m),{action:'delete',confirmation:'DELETE',userId:'attacker-chosen-id'},authorized());assert.deepEqual(r.data,{deleted:true});assert.ok(m.calls[0][0].endsWith('/auth/v1/user'));assert.ok(m.calls[1][0].endsWith('/functions/v1/delete-account'));assert.deepEqual(JSON.parse(m.calls[1][1].body),{confirmation:'DELETE'});assert.equal(m.calls[1][1].headers.Authorization,`Bearer ${token()}`);});

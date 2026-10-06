@@ -1,6 +1,6 @@
-# Lane — a clearer road ahead
+# FirstLane — Get road ready.
 
-A complete, responsive website for Lane: animated product landing, **CA$14.99 one-time Ontario G1 Complete**, privacy, terms, support, secure account-deletion interface, cookie preferences and 404 page.
+A complete, responsive website for FirstLane at **https://getfirstlane.com**: animated product landing, **CA$14.99 one-time Ontario G1 Complete**, privacy, terms, support, secure account-deletion interface, cookie preferences and 404 page.
 
 ## Open the design
 
@@ -17,7 +17,7 @@ Open `http://127.0.0.1:4173`. `npm run dev` rebuilds once, then serves the site;
 
 ## Included
 
-- Genuine Lane welcome screen and original road artwork; cream, forest and lime palette.
+- FirstLane welcome screen and original road artwork; cream, forest and lime palette.
 - Gentle road, car, phone and reveal motion; press feedback; user pause and device reduced-motion support.
 - Small-screen navigation, keyboard-accessible tabs, native FAQ disclosures, focus states and print-friendly policies.
 - Free / Complete comparison, clear one-time price and no web checkout.
@@ -28,7 +28,7 @@ Open `http://127.0.0.1:4173`. `npm run dev` rebuilds once, then serves the site;
 
 ## Important release status
 
-The **website implementation is delivered**, not a live, legally approved service. No genuine domain, store listing URLs, exact legal operator/publisher details, monitored mailboxes, retention schedule or production provider credentials were supplied. These remain blank rather than invented.
+The **FirstLane website implementation is delivered** and the official production origin is configured as `https://getfirstlane.com`. Real store listing URLs, exact legal operator/publisher details, monitored mailboxes, retention schedules and production provider credentials were not supplied. Those values remain blank rather than being invented.
 
 Consequently the supplied `dist/` has no search indexing, unavailable forms fail safely, and missing store listings say **Coming soon**. It contains no “Preview”, “TODO” or developer-only banners. Once real store links are configured, the same components become working download links automatically.
 
@@ -38,7 +38,7 @@ The policy text is a substantive implementation draft matched to the supplied ap
 
 1. Complete `site.config.json` with actual business, contact, store and policy details.
 2. No environment variables are required for the first pre-launch deployment. When an integration is ready, copy `.env.example` to `.env.local` for local work and set the relevant values on your host. Never commit real secrets.
-3. Follow `docs/INTEGRATION.md`: Supabase email-code setup, Lane’s existing Edge Function, Turnstile, Resend, abuse limits and end-to-end tests.
+3. Follow `docs/INTEGRATION.md`: Supabase email-code setup, FirstLane’s existing Edge Function, Turnstile, Resend, abuse limits and end-to-end tests.
 4. Complete `docs/LAUNCH_CHECKLIST.md`. Only mark an approval true after its real acceptance evidence exists.
 5. During setup, run:
 
@@ -73,7 +73,7 @@ Serve **only `dist/`** as the public root. The Node server in `scripts/server.mj
 
 | Change | File |
 |---|---|
-| Business, store URLs, contacts, retention | `site.config.json` |
+| Brand, tagline, origin, business, store URLs, contacts, retention | `site.config.json` |
 | Landing-page copy and sections | `src/home.mjs` |
 | Legal/support/deletion copy | `src/pages.mjs` |
 | Header, footer, metadata, common FAQs | `src/shared.mjs` |

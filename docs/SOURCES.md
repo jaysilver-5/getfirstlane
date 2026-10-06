@@ -1,6 +1,6 @@
 # Implementation references
 
-Checked 6 October 2026. These are authoritative technical/policy references, not evidence that Lane has been approved by a store or that a specific legal regime has been satisfied. Re-check at submission.
+Checked 6 October 2026. These are authoritative technical/policy references, not evidence that FirstLane has been approved by a store or that a specific legal regime has been satisfied. Re-check at submission.
 
 - Apple, offering account deletion: https://developer.apple.com/help/app-review/guideline-reference/5-1-1-account-deletion/
 - Google Play, app account deletion and external web resource: https://support.google.com/googleplay/android-developer/answer/13327111?hl=en
@@ -20,7 +20,7 @@ Checked 6 October 2026. These are authoritative technical/policy references, not
 
 ## Product source provenance
 
-Input: `Lane_Landing_Page_Handoff(1).zip`. Relevant prior source: `Lane_Production_Hardening_CA1499.zip`, supplied in the user's file library. The original theme tokens, artwork SVGs, welcome screenshot, account/profile screens, deletion function and associated migrations were examined.
+Input: the supplied FirstLane landing-page handoff and prior production-hardening package. The original theme tokens, artwork SVGs, welcome screenshot, account/profile screens, deletion function and associated migrations were examined.
 
 App tokens retained: cream `#F6F5EF`, ink `#1C2922`, forest `#243C2E`, lime `#D9F778`. Some supporting website text uses darker tones for readability. Native press feedback inspired the web press scale; website animations are web implementations, not a claim that native animations were embedded or tested here.
 

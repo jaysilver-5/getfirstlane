@@ -1,12 +1,10 @@
 
-> lane-landing@1.0.0 release:check
+> firstlane-landing@1.0.0 release:check
 > node --env-file-if-exists=.env.local scripts/release-check.mjs
 
-.env.local not found. Continuing without it.
-Release blocked: 37 owner / integration checks remain.
-  • Set siteUrl to the real HTTPS origin, without a trailing slash.
-  • Set appStoreUrl to Lane’s genuine apps.apple.com listing.
-  • Set googlePlayUrl to Lane’s genuine play.google.com listing.
+Release blocked: 36 owner / integration checks remain.
+  • Set appStoreUrl to FirstLane’s genuine apps.apple.com listing.
+  • Set googlePlayUrl to FirstLane’s genuine play.google.com listing.
   • Complete operatorLegalName.
   • Complete businessAddress.
   • Complete publisherLegalName.
