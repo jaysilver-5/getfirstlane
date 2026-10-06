@@ -1,0 +1,260 @@
+
+> lane-landing@1.0.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: non-POST requests are rejected
+ok 1 - non-POST requests are rejected
+  ---
+  duration_ms: 2.599494
+  type: 'test'
+  ...
+# Subtest: cross-origin requests are rejected before upstream work
+ok 2 - cross-origin requests are rejected before upstream work
+  ---
+  duration_ms: 0.14576
+  type: 'test'
+  ...
+# Subtest: non-JSON and oversized bodies are rejected
+ok 3 - non-JSON and oversized bodies are rejected
+  ---
+  duration_ms: 0.237187
+  type: 'test'
+  ...
+# Subtest: invalid emails and honeypots are rejected
+ok 4 - invalid emails and honeypots are rejected
+  ---
+  duration_ms: 0.669478
+  type: 'test'
+  ...
+# Subtest: missing configuration fails closed
+ok 5 - missing configuration fails closed
+  ---
+  duration_ms: 0.490959
+  type: 'test'
+  ...
+# Subtest: service-role and secret keys cannot be used
+ok 6 - service-role and secret keys cannot be used
+  ---
+  duration_ms: 0.355515
+  type: 'test'
+  ...
+# Subtest: malformed, array and primitive JSON bodies fail validation
+ok 7 - malformed, array and primitive JSON bodies fail validation
+  ---
+  duration_ms: 0.463187
+  type: 'test'
+  ...
+# Subtest: send code does not create accounts and validates action/hostname
+ok 8 - send code does not create accounts and validates action/hostname
+  ---
+  duration_ms: 17.571116
+  type: 'test'
+  ...
+# Subtest: unknown user response matches known-user response
+ok 9 - unknown user response matches known-user response
+  ---
+  duration_ms: 0.766414
+  type: 'test'
+  ...
+# Subtest: invalid captcha action or hostname blocks provider calls
+ok 10 - invalid captcha action or hostname blocks provider calls
+  ---
+  duration_ms: 2.106823
+  type: 'test'
+  ...
+# Subtest: provider rate limit is not presented as success
+ok 11 - provider rate limit is not presented as success
+  ---
+  duration_ms: 1.486799
+  type: 'test'
+  ...
+# Subtest: code-service outage is not presented as success
+ok 12 - code-service outage is not presented as success
+  ---
+  duration_ms: 1.02922
+  type: 'test'
+  ...
+# Subtest: verification only returns the access token, never refresh token
+ok 13 - verification only returns the access token, never refresh token
+  ---
+  duration_ms: 0.566112
+  type: 'test'
+  ...
+# Subtest: wrong-code, wrong-email and incomplete verification fail
+ok 14 - wrong-code, wrong-email and incomplete verification fail
+  ---
+  duration_ms: 0.57784
+  type: 'test'
+  ...
+# Subtest: non-numeric codes fail before network calls
+ok 15 - non-numeric codes fail before network calls
+  ---
+  duration_ms: 0.128203
+  type: 'test'
+  ...
+# Subtest: deletion requires bearer and explicit DELETE confirmation
+ok 16 - deletion requires bearer and explicit DELETE confirmation
+  ---
+  duration_ms: 0.304048
+  type: 'test'
+  ...
+# Subtest: deletion validates identity before calling Edge Function
+ok 17 - deletion validates identity before calling Edge Function
+  ---
+  duration_ms: 0.507965
+  type: 'test'
+  ...
+# Subtest: password, stale OTP, future OTP, expired and mismatched tokens cannot delete
+ok 18 - password, stale OTP, future OTP, expired and mismatched tokens cannot delete
+  ---
+  duration_ms: 4.494798
+  type: 'test'
+  ...
+# Subtest: remote identity rejection cannot reach deletion function
+ok 19 - remote identity rejection cannot reach deletion function
+  ---
+  duration_ms: 0.320082
+  type: 'test'
+  ...
+# Subtest: ambiguous or failed deletion never returns success
+ok 20 - ambiguous or failed deletion never returns success
+  ---
+  duration_ms: 0.990842
+  type: 'test'
+  ...
+# Subtest: network failures return a safe error, not provider details
+ok 21 - network failures return a safe error, not provider details
+  ---
+  duration_ms: 0.25925
+  type: 'test'
+  ...
+# Subtest: local signout sends scope=local, preserving unrelated sessions
+ok 22 - local signout sends scope=local, preserving unrelated sessions
+  ---
+  duration_ms: 0.256136
+  type: 'test'
+  ...
+# Subtest: every API response is non-cacheable
+ok 23 - every API response is non-cacheable
+  ---
+  duration_ms: 0.204488
+  type: 'test'
+  ...
+# Subtest: support only acknowledges accepted provider email and uses safe plain text
+ok 24 - support only acknowledges accepted provider email and uses safe plain text
+  ---
+  duration_ms: 1.353898
+  type: 'test'
+  ...
+# Subtest: support message boundaries and topic whitelist are enforced
+ok 25 - support message boundaries and topic whitelist are enforced
+  ---
+  duration_ms: 0.326071
+  type: 'test'
+  ...
+# Subtest: failed or unconfirmed email sends are not acknowledged
+ok 26 - failed or unconfirmed email sends are not acknowledged
+  ---
+  duration_ms: 0.639002
+  type: 'test'
+  ...
+# Subtest: duplicate support messages use the same short-window idempotency key
+ok 27 - duplicate support messages use the same short-window idempotency key
+  ---
+  duration_ms: 0.754917
+  type: 'test'
+  ...
+# Subtest: Vercel lazy body parse errors are a clean 400
+ok 28 - Vercel lazy body parse errors are a clean 400
+  ---
+  duration_ms: 0.33195
+  type: 'test'
+  ...
+# Subtest: delivered configuration intentionally blocks production
+ok 29 - delivered configuration intentionally blocks production
+  ---
+  duration_ms: 1.27507
+  type: 'test'
+  ...
+# Subtest: a structurally complete synthetic configuration passes the configuration validator
+ok 30 - a structurally complete synthetic configuration passes the configuration validator
+  ---
+  duration_ms: 1.290523
+  type: 'test'
+  ...
+# Subtest: old price, USD currency or subscription cannot pass
+ok 31 - old price, USD currency or subscription cannot pass
+  ---
+  duration_ms: 0.593334
+  type: 'test'
+  ...
+# Subtest: missing approvals, provider or retention objects cannot bypass the gate
+ok 32 - missing approvals, provider or retention objects cannot bypass the gate
+  ---
+  duration_ms: 0.31207
+  type: 'test'
+  ...
+# Subtest: unsafe URLs and fake listing links are rejected
+ok 33 - unsafe URLs and fake listing links are rejected
+  ---
+  duration_ms: 0.499763
+  type: 'test'
+  ...
+# Subtest: secrets and origin/mailbox mismatch block deployment
+ok 34 - secrets and origin/mailbox mismatch block deployment
+  ---
+  duration_ms: 0.907566
+  type: 'test'
+  ...
+# Subtest: public browser configuration excludes backend and approval fields
+ok 35 - public browser configuration excludes backend and approval fields
+  ---
+  duration_ms: 0.183777
+  type: 'test'
+  ...
+# Subtest: isolated production build generates live canonical, sitemap and store links with synthetic fixtures only
+ok 36 - isolated production build generates live canonical, sitemap and store links with synthetic fixtures only
+  ---
+  duration_ms: 83.907553
+  type: 'test'
+  ...
+# Subtest: all required static pages exist without old prices or internal placeholder copy
+ok 37 - all required static pages exist without old prices or internal placeholder copy
+  ---
+  duration_ms: 1.54754
+  type: 'test'
+  ...
+# Subtest: local build has no search indexing or fictitious canonical domain
+ok 38 - local build has no search indexing or fictitious canonical domain
+  ---
+  duration_ms: 0.267793
+  type: 'test'
+  ...
+# Subtest: published bundle contains no provider secrets, code source or environment
+ok 39 - published bundle contains no provider secrets, code source or environment
+  ---
+  duration_ms: 0.393543
+  type: 'test'
+  ...
+# Subtest: public images and immutable assets exist
+ok 40 - public images and immutable assets exist
+  ---
+  duration_ms: 0.24563
+  type: 'test'
+  ...
+# Subtest: actual Node server serves clean URLs, security headers, API errors, 404 and not sources
+ok 41 - actual Node server serves clean URLs, security headers, API errors, 404 and not sources
+  ---
+  duration_ms: 74.864833
+  type: 'test'
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 174.060856

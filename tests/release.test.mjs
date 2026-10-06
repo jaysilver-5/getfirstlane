@@ -1,0 +1,21 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {config,releaseIssues,publicConfig} from '../lib/config.mjs';import {env} from './helpers.mjs';
+function complete(){const c=structuredClone(config);Object.assign(c,{siteUrl:env.SITE_ORIGIN,operatorLegalName:'Synthetic Operator Limited',businessAddress:'Synthetic test address, not a real disclosure',publisherLegalName:'Synthetic Publisher Limited',publisherDisclosure:'Synthetic fixture only',governingLaw:'Synthetic reviewed provision',supportEmail:env.SUPPORT_TO_EMAIL,privacyEmail:'privacy@lane-learning.ca',appStoreUrl:'https://apps.apple.com/ca/app/lane/id1234567890',googlePlayUrl:'https://play.google.com/store/apps/details?id=ca.lane.synthetic',turnstileSiteKey:'0x_synthetic_nonproduction_key'});for(const k of Object.keys(c.providers))c.providers[k]='Synthetic provider';for(const k of Object.keys(c.retention))c.retention[k]=k==='transactionPurpose'?'Synthetic retention purpose':30;for(const k of Object.keys(c.approvals))c.approvals[k]=true;return c;}
+test('delivered configuration intentionally blocks production',()=>assert.ok(releaseIssues(config,{}).length>20));
+test('a structurally complete synthetic configuration passes the configuration validator',()=>assert.deepEqual(releaseIssues(complete(),env),[]));
+test('old price, USD currency or subscription cannot pass',()=>{for(const price of [{amount:12.99,currency:'CAD',type:'one_time'},{amount:14.99,currency:'USD',type:'one_time'},{amount:14.99,currency:'CAD',type:'subscription'}]){const c=complete();c.price=price;assert.ok(releaseIssues(c,env).some(x=>x.includes('14.99')));}});
+test('missing approvals, provider or retention objects cannot bypass the gate',()=>{for(const field of ['approvals','providers','retention']){const c=complete();delete c[field];assert.ok(releaseIssues(c,env).length>0);}});
+test('unsafe URLs and fake listing links are rejected',()=>{for(const update of [{siteUrl:'https://example.com'},{siteUrl:'http://lane-learning.ca'},{appStoreUrl:'https://apps.apple.com/ca/app/lane'},{googlePlayUrl:'https://play.google.com/store/apps/details'}]){const c={...complete(),...update};assert.ok(releaseIssues(c,env).length>0);}});
+test('secrets and origin/mailbox mismatch block deployment',()=>{for(const update of [{SUPABASE_PUBLIC_KEY:'sb_secret_forbidden'},{SITE_ORIGIN:'https://elsewhere.ca'},{SUPPORT_TO_EMAIL:'wrong@lane-learning.ca'}])assert.ok(releaseIssues(complete(),{...env,...update}).length>0);});
+test('public browser configuration excludes backend and approval fields',()=>{const pub=publicConfig({...complete(),SUPABASE_SERVICE_ROLE_KEY:'DO_NOT_EXPOSE'});assert.equal(pub.SUPABASE_SERVICE_ROLE_KEY,undefined);assert.equal(pub.approvals,undefined);assert.equal(pub.retention,undefined);assert.equal(pub.priceLabel,'CA$14.99');});
+
+test('isolated production build generates live canonical, sitemap and store links with synthetic fixtures only',async()=>{
+ const {mkdtempSync,cpSync,writeFileSync,readFileSync,rmSync}=await import('node:fs');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const {fileURLToPath}=await import('node:url');const {spawnSync}=await import('node:child_process');
+ const root=fileURLToPath(new URL('../',import.meta.url)),folder=mkdtempSync(join(tmpdir(),'lane-build-test-'));
+ try{
+  for(const name of ['src','public','scripts','lib','package.json'])cpSync(join(root,name),join(folder,name),{recursive:true});
+  writeFileSync(join(folder,'site.config.json'),JSON.stringify(complete()));
+  const result=spawnSync(process.execPath,['scripts/build.mjs','--production'],{cwd:folder,env:{...process.env,...env},encoding:'utf8'});assert.equal(result.status,0,result.stderr);
+  const html=readFileSync(join(folder,'dist/index.html'),'utf8');assert.match(html,/name="robots" content="index, follow"/);assert.match(html,/rel="canonical" href="https:\/\/lane-learning.ca\//);assert.match(html,/id1234567890/);assert.doesNotMatch(html,/Coming soon/);assert.match(readFileSync(join(folder,'dist/sitemap.xml'),'utf8'),/\/delete-account<\/loc>/);
+ }finally{rmSync(folder,{recursive:true,force:true});}
+});

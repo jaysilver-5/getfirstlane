@@ -1,0 +1,55 @@
+import { readFileSync } from 'node:fs';
+import { icon, stores, faq, commonFAQ } from './shared.mjs';
+import { priceLabel } from '../lib/config.mjs';
+const journey = readFileSync(new URL('./journey.html',import.meta.url),'utf8');
+const ticks = list => `<ul class="feature-list">${list.map(t=>`<li>${icon('check')}<span>${t}</span></li>`).join('')}</ul>`;
+export function home() { return `
+<section class="hero wrap" aria-labelledby="hero-title">
+ <div class="hero-copy"><div class="eyebrow"><span class="status-dot"></span> ONTARIO G1 PREP, AT YOUR PACE</div>
+ <h1 id="hero-title">Your G1.<br>A clearer<br><em>road ahead.</em></h1>
+ <p class="hero-description">Less second-guessing. More understanding.<br>Meet the calmer way to prepare for your Ontario G1.</p>
+ ${stores('hero')}
+ <p class="hero-note">${icon('check')} 40 questions free <span class="dot-separator">·</span> ${priceLabel} to unlock Ontario once</p>
+ <a class="text-link hero-discover" href="#how">A little practice goes a long way <span>↓</span></a>
+ </div>
+ <div class="hero-scene" aria-label="Lane’s welcome screen and road artwork">
+   <div class="scene-grid" aria-hidden="true"></div><div class="scene-orbit" aria-hidden="true"></div>
+   <div class="scene-route"><span class="route-dot"></span> YOUR ROUTE <strong>Ontario G1</strong>${icon('arrowUp')}</div>
+   <div class="hero-art">${journey}</div>
+   <div class="hero-phone"><img src="assets/lane-welcome.webp" width="390" height="844" fetchpriority="high" alt="Lane welcome screen: The road ahead looks good on you. Create a free account or try 10 guest questions."></div>
+   <div class="floating-note">${icon('spark')}<div><strong>A little practice.</strong><span>A whole new chapter.</span></div></div>
+   <span class="scene-label">SMALL STEPS. REAL UNDERSTANDING.</span>
+   <div class="scene-spark one" aria-hidden="true">✦</div><div class="scene-spark two" aria-hidden="true">✦</div>
+ </div>
+</section>
+<div class="principles-band"><div class="wrap principles"><span>${icon('book')} Understand the why</span><span>${icon('clock')} Practise at your pace</span><span>${icon('refresh')} Learn from mistakes</span><span>${icon('lock')} One payment. No renewals.</span></div></div>
+<section id="how" class="section wrap">
+ <div class="section-heading split-heading"><div><div class="eyebrow">01 / FIND YOUR RHYTHM</div><h2>Less overwhelm.<br><em>More “I’ve got this.”</em></h2></div><p>You don’t need another endless list of questions. You need a little direction—and a reason to keep going.</p></div>
+ <div class="steps-grid">
+ <article class="step-card" data-reveal><div class="step-top"><span class="step-number">01</span>${icon('book')}</div><div class="mini-question" aria-hidden="true"><span class="mini-line"></span><span class="mini-line short"></span><div class="mini-answer"><span>A</span><i></i></div><div class="mini-answer selected"><span>B</span><i></i>${icon('check')}</div></div><h3>Start small.</h3><p>Try 10 questions as a guest. Create an account for 40 free questions and a place to save your progress.</p><span class="step-foot">No card. No countdown.</span></article>
+ <article class="step-card" data-reveal><div class="step-top"><span class="step-number">02</span>${icon('spark')}</div><div class="mini-explanation" aria-hidden="true"><span class="mini-check">${icon('check')}</span><strong>Now that makes sense.</strong><span class="mini-line"></span><span class="mini-line short"></span></div><h3>Make it click.</h3><p>Go beyond a right or wrong answer. Clear explanations help you understand the rule behind the question.</p><span class="step-foot">Understanding beats memorising.</span></article>
+ <article class="step-card" data-reveal><div class="step-top"><span class="step-number">03</span>${icon('flag')}</div><div class="mini-journey" aria-hidden="true"><span>${icon('book')}</span><i></i><span>${icon('refresh')}</span><i></i><span>${icon('flag')}</span></div><h3>Find your way forward.</h3><p>See what needs another look. With Complete, turn mistakes into focused practice and build your test-day confidence.</p><span class="step-foot">One useful step at a time.</span></article>
+ </div>
+</section>
+<section id="inside" class="inside-section">
+ <div class="wrap inside-layout"><div class="inside-art-panel"><span class="eyebrow">MADE TO FEEL LIKE PROGRESS</span><div class="inside-art">${journey.replaceAll('id="','id="inside-').replaceAll('url(#','url(#inside-')}</div><div class="journey-caption"><span class="route-dot"></span><span>Your pace. Your path.</span><strong>Keep going ↗</strong></div></div>
+ <div class="inside-content"><div class="eyebrow">02 / THE WAY LANE WORKS</div><h2>Small sessions.<br><em>A bigger picture.</em></h2><p class="inside-lead">A study routine that feels less like a chore, and more like getting somewhere.</p>
+ <div class="study-tabs" role="tablist" aria-label="Explore Lane’s study features"><button type="button" role="tab" aria-selected="true" aria-controls="panel-practise" id="tab-practise" tabindex="0">Practise</button><button type="button" role="tab" aria-selected="false" aria-controls="panel-understand" id="tab-understand" tabindex="-1">Understand</button><button type="button" role="tab" aria-selected="false" aria-controls="panel-progress" id="tab-progress" tabindex="-1">Progress</button></div>
+ <div class="study-panel" role="tabpanel" id="panel-practise" aria-labelledby="tab-practise" tabindex="0"><div class="panel-icon">${icon('book')}</div><h3>A little practice, whenever it fits.</h3><p>Work through Ontario road rules and signs. Pick a topic, revisit a bookmark, or settle into a full mock session with Complete.</p><span class="panel-meta">FOCUSED TOPICS <span>•</span> MOCK SESSIONS <span>•</span> BOOKMARKS</span></div>
+ <div class="study-panel" role="tabpanel" id="panel-understand" aria-labelledby="tab-understand" tabindex="0" hidden><div class="panel-icon">${icon('spark')}</div><h3>Learn the reason. Not just the answer.</h3><p>Explanations give each answer context. Mistake review helps you return to the things that need a little more attention.</p><span class="panel-meta">CLEAR EXPLANATIONS <span>•</span> MISTAKE REVIEW</span></div>
+ <div class="study-panel" role="tabpanel" id="panel-progress" aria-labelledby="tab-progress" tabindex="0" hidden><div class="panel-icon">${icon('chart')}</div><h3>See where your practice is taking you.</h3><p>Keep your study history together. Sync progress when you’re online and use it to decide what deserves your next session.</p><span class="panel-meta">SAVED HISTORY <span>•</span> FOCUSED REVISION</span></div>
+ </div></div>
+</section>
+<section class="section wrap details-section"><div class="section-heading centered"><div class="eyebrow">A LITTLE MORE THOUGHT IN EVERY DETAIL</div><h2>Made for real life.<br><em>Not just test day.</em></h2></div><div class="detail-grid">
+ <article class="detail-card" data-reveal><div class="detail-icon">${icon('wifi')}</div><h3>Take your practice with you.</h3><p>Download your Ontario pack and study offline. Connect again for syncing, updates and access checks.</p><span class="card-tag">OFFLINE STUDY WITH COMPLETE</span></article>
+ <article class="detail-card" data-reveal><div class="detail-icon peach">${icon('heart')}</div><h3>A calmer place to learn.</h3><p>Short sessions, clear language and a gentle pace. Make a mistake, understand it, and try again.</p><span class="card-tag">PROGRESS WITHOUT THE PRESSURE</span></article>
+ <article class="detail-card" data-reveal><div class="detail-icon lavender">${icon('shield')}</div><h3>Your account. Your choice.</h3><p>Plain-language privacy information, purchase help and a clear route to delete your account.</p><a class="text-link" href="privacy.html">Your privacy, explained ${icon('arrowUp')}</a></article>
+ </div></section>
+<section id="pricing" class="pricing-section section"><div class="wrap"><div class="section-heading centered"><div class="eyebrow">03 / ONE LESS THING TO THINK ABOUT</div><h2>Your next chapter.<br><em>Not another subscription.</em></h2><p>Start free. Unlock Ontario once. Learn at your pace.</p></div>
+ <div class="pricing-grid"><article class="price-card free-card" data-reveal><span class="price-tag">A GOOD PLACE TO START</span><h3>Lane Free</h3><div class="price"><span class="currency">CA$</span>0<span class="price-period">to get going</span></div><p>Get a feel for Lane before you decide.</p>${ticks(['10 guest questions before signing up','40 fixed questions with a free account','Explanations and sample review','Saved free progress','No trial expiry or payment details'])}<a href="#download" class="button outline">Start with Lane Free ${icon('arrowUp')}</a></article>
+ <article class="price-card complete-card" data-reveal><div class="complete-tag">THE FULL ONTARIO PACK ${icon('spark')}</div><h3>Ontario G1 Complete</h3><div class="price"><span class="currency">CA$</span>14<span class="price-decimal">.99</span></div><div class="once-label"><span class="status-dot"></span> One payment. No automatic renewal.</div><p>A fuller study toolkit, ready when you are.</p>${ticks(['The Ontario practice pack','Focused topics and full mock sessions','Mistake review and bookmarks','Downloaded offline study','No scheduled expiry on your Ontario pack'])}<a href="#download" class="button lime">Get Lane. Unlock in the app. ${icon('arrowUp')}</a><p class="price-fine">Purchase through Apple or Google. Final price and any tax are shown before payment. Future jurisdictions are separate purchases.</p></article></div>
+ <div class="pricing-reassurance"><span>${icon('lock')} Store-handled payments</span><span>${icon('refresh')} Purchase-restoration support</span><span>${icon('check')} No web checkout</span></div>
+ </div></section>
+<section class="independence wrap"><div class="independence-icon">${icon('flag')}</div><div><div class="eyebrow">CONFIDENCE, WITHOUT THE BIG CLAIMS</div><h2>Your study companion.<br>Not the official test.</h2></div><p>Lane is independent Ontario G1 preparation. We’re not affiliated with Ontario’s Ministry of Transportation or DriveTest, and we don’t promise a pass. We help you put in the practice.</p></section>
+<section id="faq" class="section wrap faq-section"><div class="faq-heading"><div class="eyebrow">GOOD QUESTIONS. CLEAR ANSWERS.</div><h2>A little clarity<br><em>before you start.</em></h2><p>Still wondering about something?</p><a class="text-link" href="support.html">Let’s get it sorted ${icon('arrowUp')}</a></div>${faq(commonFAQ)}</section>
+<section id="download" class="download-section wrap"><div class="download-card"><div class="download-content"><div class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div><h2>The road ahead<br><em>looks good on you.</em></h2><p>Start with a little practice. See where it takes you.</p>${stores('bottom',true)}<span class="download-note">40 questions free · ${priceLabel} one-time Ontario unlock</span></div><div class="download-road" aria-hidden="true"><img src="assets/road.svg" width="480" height="280" alt="" loading="lazy"></div><div class="download-stamp" aria-hidden="true">LET’S<br>GO <span>↗</span></div></div></section>`; }

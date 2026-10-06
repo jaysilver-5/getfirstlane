@@ -1,0 +1,16 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,readdirSync,existsSync} from 'node:fs';import {once} from 'node:events';import {createServer} from '../scripts/server.mjs';
+const dist=new URL('../dist/',import.meta.url);
+test('all required static pages exist without old prices or internal placeholder copy',()=>{for(const p of ['index','privacy','terms','support','delete-account','cookies','404']){const html=readFileSync(new URL(p+'.html',dist),'utf8');assert.ok(html.includes('<main id="main">'));assert.equal((html.match(/<h1(?: |>)/g)||[]).length,1);assert.doesNotMatch(html,/12\.99|REPLACE_ME|\bPreview\b|\bTODO\b|\[INSERT/i);assert.match(html,/name="description"/);}});
+test('local build has no search indexing or fictitious canonical domain',()=>{assert.match(readFileSync(new URL('index.html',dist),'utf8'),/noindex, nofollow/);assert.equal(readFileSync(new URL('robots.txt',dist),'utf8'),'User-agent: *\nDisallow: /\n');});
+test('published bundle contains no provider secrets, code source or environment',()=>{for(const p of readdirSync(dist))assert.ok(!['.env','site.config.json','src','docs','api','tests'].includes(p));for(const p of readdirSync(new URL('assets/',dist)).filter(x=>x.endsWith('.js')))assert.doesNotMatch(readFileSync(new URL('assets/'+p,dist),'utf8'),/SUPABASE_PUBLIC_KEY|RESEND_API_KEY|TURNSTILE_SECRET_KEY|service_role/);});
+test('public images and immutable assets exist',()=>{for(const p of ['logo.svg','journey.svg','lane-welcome.webp','social-card.png','apple-touch-icon.png'])assert.ok(existsSync(new URL('assets/'+p,dist)));assert.ok(readdirSync(new URL('assets/',dist)).some(x=>/^app\.[a-f0-9]{12}\.js$/.test(x)));});
+test('actual Node server serves clean URLs, security headers, API errors, 404 and not sources',async()=>{
+ const server=createServer();server.listen(0,'127.0.0.1');await once(server,'listening');const base=`http://127.0.0.1:${server.address().port}`;
+ try {
+  for(const route of ['/','/index.html','/privacy','/terms','/support','/delete-account','/cookies']){const r=await fetch(base+route);assert.equal(r.status,200,route);assert.match(r.headers.get('content-security-policy'),/frame-ancestors 'none'/);assert.equal(r.headers.get('x-content-type-options'),'nosniff');assert.match(await r.text(),/Lane/);}
+  for(const route of ['/missing/deep/page','/src/home.mjs','/site.config.json','/.env','/api/missing']){const r=await fetch(base+route);assert.equal(r.status,404,route);}
+  const deleted=await fetch(base+'/delete-account');assert.equal(deleted.headers.get('cache-control'),'no-store');
+  const api=await fetch(base+'/api/account');assert.equal(api.status,405);assert.equal(api.headers.get('cache-control'),'no-store, max-age=0');
+  const head=await fetch(base+'/',{method:'HEAD'});assert.equal(head.status,200);assert.equal(await head.text(),'');
+ }finally{server.closeAllConnections();server.close();await once(server,'close');}
+});

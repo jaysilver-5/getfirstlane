@@ -1,0 +1,101 @@
+{
+  "method": "Isolated Chromium DOM rendering via set_content; local network navigation is policy-blocked. No deployed-site, live CAPTCHA, email or real deletion tests are claimed.",
+  "checks": [
+    {
+      "check": "Every internal page, asset, anchor and ID in the built site is valid",
+      "result": "PASS"
+    },
+    {
+      "check": "index: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "privacy: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "terms: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "support: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "delete-account: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "cookies: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "404: no horizontal overflow at 320, 360, 390, 768, 1024 and 1440 pixels",
+      "result": "PASS"
+    },
+    {
+      "check": "No page JavaScript exceptions in the isolated browser renders",
+      "result": "PASS"
+    },
+    {
+      "check": "Device reduced motion disables continuous animation and reflects its state",
+      "result": "PASS"
+    },
+    {
+      "check": "Manual pause/resume changes the animation state",
+      "result": "PASS"
+    },
+    {
+      "check": "Mobile menu opens, closes with Escape and returns focus",
+      "result": "PASS"
+    },
+    {
+      "check": "Feature tabs support keyboard selection and visible panel changes",
+      "result": "PASS"
+    },
+    {
+      "check": "FAQs open with native disclosure semantics",
+      "result": "PASS"
+    },
+    {
+      "check": "support: missing live settings disable submission rather than simulate success",
+      "result": "PASS"
+    },
+    {
+      "check": "delete-account: missing live settings disable submission rather than simulate success",
+      "result": "PASS"
+    },
+    {
+      "check": "Landing and pricing remain readable without JavaScript",
+      "result": "PASS"
+    },
+    {
+      "check": "Support success UI requires its corresponding API response (synthetic provider)",
+      "result": "PASS"
+    },
+    {
+      "check": "Support fail UI requires its corresponding API response (synthetic provider)",
+      "result": "PASS"
+    },
+    {
+      "check": "OTP alone does not delete an account (success fixture)",
+      "result": "PASS"
+    },
+    {
+      "check": "Deletion success path enforces explicit confirmation and truthful result (synthetic provider)",
+      "result": "PASS"
+    },
+    {
+      "check": "OTP alone does not delete an account (fail fixture)",
+      "result": "PASS"
+    },
+    {
+      "check": "Deletion fail path enforces explicit confirmation and truthful result (synthetic provider)",
+      "result": "PASS"
+    },
+    {
+      "check": "Cancel requests local sign-out and never invokes deletion (synthetic provider)",
+      "result": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "brand": "Lane",
+  "siteUrl": "",
+  "operatorDisplayName": "Tervlon Labs",
+  "operatorLegalName": "",
+  "businessAddress": "",
+  "publisherLegalName": "",
+  "publisherDisclosure": "",
+  "supportEmail": "",
+  "privacyEmail": "",
+  "appStoreUrl": "",
+  "googlePlayUrl": "",
+  "price": { "amount": 14.99, "currency": "CAD", "type": "one_time" },
+  "effectiveDate": "2026-10-06",
+  "minimumAge": 16,
+  "turnstileSiteKey": "",
+  "providers": { "websiteHost": "", "authenticationEmail": "", "supportEmail": "Resend", "processingCountries": "" },
+  "retention": { "deletionDays": null, "backupDays": null, "securityLogDays": null, "supportMonths": null, "transactionYears": null, "transactionPurpose": "", "processorDeletionDays": null },
+  "governingLaw": "",
+  "approvals": {
+    "legalPoliciesReviewed": false,
+    "operatorAndPublisherVerified": false,
+    "retentionAndProcessorsVerified": false,
+    "contentAndFeatureClaimsReviewed": false,
+    "nativePriceAndStoreLinksVerified": false,
+    "supportDeliveryTested": false,
+    "deletionEndToEndTested": false,
+    "rateLimitsAndMonitoringEnabled": false,
+    "nativePrivacyDisclosuresMatch": false
+  }
+}

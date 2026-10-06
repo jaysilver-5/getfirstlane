@@ -1,0 +1,44 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createAccountHandler} from '../api/account.js';
+import {createSupportHandler} from '../api/support.js';
+import {readJson,publicSupabaseKey} from '../lib/http.mjs';
+import {NOW,env,json,captcha,fetchSequence,token,invoke} from './helpers.mjs';
+const send={action:'send-code',email:'learner@lane-learning.ca',captchaToken:'solved-captcha'};
+const supportBody={email:send.email,topic:'account',message:'Please help me restore my account.',captchaToken:'solved-captcha'};
+const account=(mock,extra={})=>createAccountHandler({env,now:()=>NOW,...mock,...extra});
+const support=(mock,extra={})=>createSupportHandler({env,now:()=>NOW,...mock,...extra});
+const authorized=(value=token())=>({headers:{authorization:`Bearer ${value}`}});
+const identity=()=>json({id:'user-1',email:send.email,email_confirmed_at:'2026-01-01'});
+test('non-POST requests are rejected',async()=>assert.equal((await invoke(account({}),send,{method:'GET'})).statusCode,405));
+test('cross-origin requests are rejected before upstream work',async()=>assert.equal((await invoke(account({}),send,{headers:{origin:'https://attacker.invalid'}})).statusCode,403));
+test('non-JSON and oversized bodies are rejected',async()=>{assert.equal((await invoke(account({}),send,{headers:{'content-type':'text/plain'}})).statusCode,415);assert.equal((await invoke(account({}),send,{headers:{'content-length':'20000'}})).statusCode,413);});
+test('invalid emails and honeypots are rejected',async()=>{for(const email of ['x','hi\r\nBcc:attacker@x.ca','a@x.ca>b','a'.repeat(255)+'@x.ca'])assert.equal((await invoke(account({}),{...send,email})).statusCode,400);assert.equal((await invoke(account({}),{...send,company:'bot'})).statusCode,400);});
+test('missing configuration fails closed',async()=>assert.equal((await invoke(account({}, {env:{SITE_ORIGIN:env.SITE_ORIGIN}}),send)).statusCode,503));
+test('service-role and secret keys cannot be used',()=>{assert.throws(()=>publicSupabaseKey({SUPABASE_PUBLIC_KEY:'sb_secret_forbidden'}));assert.throws(()=>publicSupabaseKey({SUPABASE_PUBLIC_KEY:token({role:'service_role'})}));});
+test('malformed, array and primitive JSON bodies fail validation',async()=>{for(const body of ['bad json','"string"','[]','null'])await assert.rejects(()=>readJson({body}));});
+test('send code does not create accounts and validates action/hostname',async()=>{const m=fetchSequence(captcha(),json({}));const r=await invoke(account(m),send);assert.deepEqual(r.data,{sent:true});assert.deepEqual(JSON.parse(m.calls[1][1].body),{email:send.email,create_user:false});assert.ok(m.calls[1][0].endsWith('/auth/v1/otp'));});
+test('unknown user response matches known-user response',async()=>{const m=fetchSequence(captcha(),json({code:'otp_disabled'},400));assert.deepEqual((await invoke(account(m),send)).data,{sent:true});});
+test('invalid captcha action or hostname blocks provider calls',async()=>{for(const extra of [{action:'support'},{hostname:'attacker.invalid'},{success:false}]){const m=fetchSequence(captcha('deletion',extra));assert.equal((await invoke(account(m),send)).statusCode,400);assert.equal(m.calls.length,1);}});
+test('provider rate limit is not presented as success',async()=>{const m=fetchSequence(captcha(),json({},429));assert.equal((await invoke(account(m),send)).statusCode,429);});
+test('code-service outage is not presented as success',async()=>{const m=fetchSequence(captcha(),json({secret:'internal'},500));const r=await invoke(account(m),send);assert.equal(r.statusCode,503);assert.ok(!JSON.stringify(r.data).includes('internal'));});
+test('verification only returns the access token, never refresh token',async()=>{const m=fetchSequence(json({access_token:token(),refresh_token:'DO_NOT_RETURN',user:{email:send.email}}));const r=await invoke(account(m),{action:'verify-code',email:send.email,code:'123456'});assert.equal(r.data.verified,true);assert.equal(r.data.accessToken,token());assert.equal(JSON.parse(m.calls[0][1].body).type,'email');assert.ok(!JSON.stringify(r.data).includes('DO_NOT_RETURN'));});
+test('wrong-code, wrong-email and incomplete verification fail',async()=>{for(const result of [{},{access_token:token(),user:{email:'someone-else@lane-learning.ca'}}]){const m=fetchSequence(json(result));assert.equal((await invoke(account(m),{action:'verify-code',email:send.email,code:'123456'})).statusCode,401);}});
+test('non-numeric codes fail before network calls',async()=>assert.equal((await invoke(account({}),{action:'verify-code',email:send.email,code:'abcd12'})).statusCode,400));
+test('deletion requires bearer and explicit DELETE confirmation',async()=>{assert.equal((await invoke(account({}),{action:'delete',confirmation:'DELETE'})).statusCode,401);assert.equal((await invoke(account({}),{action:'delete'},authorized())).statusCode,400);});
+test('deletion validates identity before calling Edge Function',async()=>{const m=fetchSequence(identity(),json({deleted:true}));const r=await invoke(account(m),{action:'delete',confirmation:'DELETE',userId:'attacker-chosen-id'},authorized());assert.deepEqual(r.data,{deleted:true});assert.ok(m.calls[0][0].endsWith('/auth/v1/user'));assert.ok(m.calls[1][0].endsWith('/functions/v1/delete-account'));assert.deepEqual(JSON.parse(m.calls[1][1].body),{confirmation:'DELETE'});assert.equal(m.calls[1][1].headers.Authorization,`Bearer ${token()}`);});
+test('password, stale OTP, future OTP, expired and mismatched tokens cannot delete',async()=>{
+ for(const claims of [{amr:[{method:'password',timestamp:NOW/1000}]},{amr:[{method:'otp',timestamp:NOW/1000-601}]},{amr:[{method:'otp',timestamp:NOW/1000+90}]},{exp:NOW/1000-1},{sub:'another-user'},{amr:[]}]){
+  const m=fetchSequence(identity());const r=await invoke(account(m),{action:'delete',confirmation:'DELETE'},authorized(token(claims)));assert.equal(r.statusCode,401);assert.equal(m.calls.length,1);
+ }
+});
+test('remote identity rejection cannot reach deletion function',async()=>{const m=fetchSequence(json({},401));assert.equal((await invoke(account(m),{action:'delete',confirmation:'DELETE'},authorized())).statusCode,401);assert.equal(m.calls.length,1);});
+test('ambiguous or failed deletion never returns success',async()=>{for(const result of [json({}),json({deleted:false}),json({deleted:true},500)]){const m=fetchSequence(identity(),result);assert.equal((await invoke(account(m),{action:'delete',confirmation:'DELETE'},authorized())).statusCode,503);}});
+test('network failures return a safe error, not provider details',async()=>{const m=fetchSequence(new Error('credentials: secret'));const r=await invoke(account(m),send);assert.equal(r.statusCode,503);assert.ok(!JSON.stringify(r.data).includes('credentials'));});
+test('local signout sends scope=local, preserving unrelated sessions',async()=>{const m=fetchSequence(json({}));assert.equal((await invoke(account(m),{action:'signout'},authorized())).data.signedOut,true);assert.ok(m.calls[0][0].endsWith('/logout?scope=local'));});
+test('every API response is non-cacheable',async()=>{const r=await invoke(account({}),{action:'unknown'});assert.match(r.headers['cache-control'],/no-store/);assert.equal(r.headers['referrer-policy'],'no-referrer');});
+test('support only acknowledges accepted provider email and uses safe plain text',async()=>{const m=fetchSequence(captcha('support'),json({id:'message-1'}));const r=await invoke(support(m),{...supportBody,message:'<script>hello!</script> Please help.'});assert.deepEqual(r.data,{accepted:true});const payload=JSON.parse(m.calls[1][1].body);assert.equal(payload.reply_to,send.email);assert.deepEqual(payload.to,[env.SUPPORT_TO_EMAIL]);assert.equal(payload.html,undefined);assert.match(payload.text,/<script>/);assert.ok(m.calls[1][1].headers['Idempotency-Key']);});
+test('support message boundaries and topic whitelist are enforced',async()=>{for(const update of [{message:'x'},{message:'x'.repeat(4001)},{topic:'__proto__'},{company:'bot'},{email:'bad'}])assert.equal((await invoke(support({}),{...supportBody,...update})).statusCode,400);});
+test('failed or unconfirmed email sends are not acknowledged',async()=>{for(const response of [json({},200),json({id:'not-success'},500)]){const m=fetchSequence(captcha('support'),response);assert.equal((await invoke(support(m),supportBody)).statusCode,503);}});
+test('duplicate support messages use the same short-window idempotency key',async()=>{const keys=[];for(let i=0;i<2;i++){const m=fetchSequence(captcha('support'),json({id:'same-message'}));await invoke(support(m),supportBody);keys.push(m.calls[1][1].headers['Idempotency-Key']);}assert.equal(keys[0],keys[1]);});
+test('Vercel lazy body parse errors are a clean 400',async()=>{const req={get body(){throw new Error('SyntaxError with private input');}};await assert.rejects(()=>readJson(req),e=>e.status===400&&e.message==='Invalid request.');});
