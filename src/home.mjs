@@ -12,8 +12,14 @@ export function home() { return `
  <p class="hero-note">${icon('check')} 40 questions free <span class="dot-separator">·</span> ${priceLabel} to unlock Ontario once</p>
  <a class="text-link hero-discover" href="#how">A little practice goes a long way <span>↓</span></a>
  </div>
- <div class="hero-scene hero-banner" aria-label="FirstLane banner showing the road ahead">
-   <img src="assets/firstlane-banner.png" width="1730" height="909" fetchpriority="high" alt="FirstLane — Get road ready. A phone displaying a car on a winding road.">
+ <div class="hero-scene" aria-label="FirstLane’s welcome screen and road artwork">
+   <div class="scene-grid" aria-hidden="true"></div><div class="scene-orbit" aria-hidden="true"></div>
+   <div class="scene-route"><span class="route-dot"></span> YOUR ROUTE <strong>Ontario G1</strong>${icon('arrowUp')}</div>
+   <div class="hero-art">${journey}</div>
+   <div class="hero-phone"><img src="assets/firstlane-welcome.webp" width="390" height="844" fetchpriority="high" alt="FirstLane welcome screen: The road ahead looks good on you. Create a free account or try 10 guest questions."></div>
+   <div class="floating-note">${icon('spark')}<div><strong>A little practice.</strong><span>A whole new chapter.</span></div></div>
+   <span class="scene-label">SMALL STEPS. REAL UNDERSTANDING.</span>
+   <div class="scene-spark one" aria-hidden="true">✦</div><div class="scene-spark two" aria-hidden="true">✦</div>
  </div>
 </section>
 <div class="principles-band"><div class="wrap principles"><span>${icon('book')} Understand the why</span><span>${icon('clock')} Practise at your pace</span><span>${icon('refresh')} Learn from mistakes</span><span>${icon('lock')} One payment. No renewals.</span></div></div>
