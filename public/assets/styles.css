@@ -24,3 +24,30 @@
 @media(max-width:600px){.data-table thead th:first-child,.data-table th[scope="row"]{width:31%}.data-table th[scope="row"]{font-size:11px}}
 .brand{font-size:30px;letter-spacing:-1.8px;white-space:nowrap}
 @media(max-width:600px){.brand{font-size:24px;letter-spacing:-1.2px}}
+
+/* Browser practice sample: intentionally follows the existing cards, spacing and palette. */
+.practice-sample{background:#f8f8f2;border-block:1px solid var(--line)}
+.sample-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:72px;align-items:start}
+.sample-intro{position:sticky;top:120px}
+.sample-intro h2{font-size:clamp(42px,4.2vw,60px);margin-top:16px}
+.sample-intro>p{font-size:14px;line-height:1.9;margin-top:24px;max-width:420px}
+.sample-intro .text-link{margin-top:24px}
+.sample-quiz{display:grid;gap:14px}
+.quiz-question{margin:0;padding:24px 26px;border:1px solid var(--line);border-radius:18px;background:#fff}
+.quiz-question legend{display:flex;gap:13px;padding:0 7px;font-size:15px;font-weight:650;line-height:1.55}
+.quiz-question legend span{font-family:Georgia,serif;font-style:italic;color:#718365}
+.quiz-options{display:grid;gap:8px;margin-top:17px}
+.quiz-option{min-height:48px;padding:11px 14px;border:1px solid #d3dacb;border-radius:10px;background:#fbfcf7;text-align:left;font-size:13px;line-height:1.5;transition:border-color .2s,background .2s}
+.quiz-option:hover:not(:disabled){border-color:#789451;background:#f2f6e9}
+.quiz-option:disabled{opacity:1;cursor:default}
+.quiz-option.correct,.quiz-option.correct-answer{border-color:#62822e;background:#e8f2d7}
+.quiz-option.incorrect{border-color:#b85b4f;background:#faebe7}
+.quiz-feedback{font-size:12px;line-height:1.8;margin-top:15px;padding-top:14px;border-top:1px solid var(--line);color:#3f553b}
+.quiz-feedback.needs-review:before{content:"Review: ";font-weight:700}
+.quiz-summary{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 25px;border-radius:16px;background:var(--forest);color:var(--paper)}
+.quiz-summary strong{display:block;font-size:14px;margin-top:5px}
+.quiz-summary .eyebrow{color:#c8dbab}
+.quiz-summary .button{min-height:44px;color:var(--paper);border-color:#718365;flex-shrink:0}
+.quiz-source{font-size:10px;line-height:1.8;text-align:center;padding-inline:20px}
+@media(max-width:850px){.sample-layout{grid-template-columns:1fr;gap:35px}.sample-intro{position:static;max-width:650px}.sample-intro>p{max-width:620px}}
+@media(max-width:600px){.quiz-question{padding:20px 17px}.quiz-question legend{font-size:14px;padding:0 4px}.quiz-option{font-size:12px}.quiz-summary{align-items:flex-start;flex-direction:column}.quiz-summary .button{width:100%}.sample-intro h2{font-size:36px}}

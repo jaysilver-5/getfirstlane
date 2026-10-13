@@ -1,1 +1,0 @@
-window.FIRSTLANE = Object.freeze({"brand":"FirstLane","tagline":"Get road ready.","appStoreUrl":"","googlePlayUrl":"","supportEmail":"","privacyEmail":"","turnstileSiteKey":"","priceLabel":"CA$14.99","formsEnabled":false});

@@ -72,6 +72,43 @@
     });
   }
 
+  const sampleQuiz = $('#sample-quiz');
+  if (sampleQuiz) {
+    const questions = $$('[data-question]', sampleQuiz);
+    const score = $('#quiz-score');
+    questions.forEach(question => {
+      $$('.quiz-option', question).forEach(option => option.addEventListener('click', () => {
+        if (question.dataset.answered === 'true') return;
+        question.dataset.answered = 'true';
+        const correct = option.dataset.correct === 'true';
+        option.classList.add(correct ? 'correct' : 'incorrect');
+        option.setAttribute('aria-pressed', 'true');
+        $$('.quiz-option', question).forEach(button => {
+          button.disabled = true;
+          if (button.dataset.correct === 'true') button.classList.add('correct-answer');
+        });
+        const feedback = $('[data-feedback]', question);
+        feedback.hidden = false;
+        feedback.classList.toggle('needs-review', !correct);
+        const answered = questions.filter(item => item.dataset.answered === 'true').length;
+        const total = questions.filter(item => $('.quiz-option.correct', item)).length;
+        score.textContent = answered === questions.length ? `${total} of ${questions.length} correct. Review the explanations, then try again.` : `${answered} of ${questions.length} answered.`;
+      }));
+    });
+    sampleQuiz.addEventListener('reset', () => requestAnimationFrame(() => {
+      questions.forEach(question => {
+        delete question.dataset.answered;
+        $('[data-feedback]', question).hidden = true;
+        $$('.quiz-option', question).forEach(option => {
+          option.disabled = false; option.removeAttribute('aria-pressed');
+          option.classList.remove('correct', 'incorrect', 'correct-answer');
+        });
+      });
+      score.textContent = 'Answer all five when you’re ready.';
+      $('.quiz-option', questions[0])?.focus();
+    }));
+  }
+
   // No advertising/analytics SDK is installed. Store links work as ordinary links.
   // Form requests use same-origin, authenticated server handlers. No privileged keys in this file.
   function status(node, text, error = false) {
