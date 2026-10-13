@@ -19,7 +19,7 @@ Date of handoff: 7 October 2026. The official FirstLane origin is configured; ot
 | `governingLaw` | Professionally reviewed wording preserving mandatory consumer rights. Do not assume a governing jurisdiction from the target market alone. |
 | `minimumAge`, `effectiveDate` | Review the proposed minimum age of 16, minor/guardian consent, target audience and policy effective date. |
 
-The operator may be Tervlon Labs, but the exact registered operator and publisher arrangement was not established by this handoff. The implementation does not assert a made-up legal name or postal address.
+FirstLane is branded as an independent product. The exact registered operator and publisher arrangement was not established by this handoff. The implementation does not assert a made-up legal name or postal address.
 
 ## 2. Commercial and content checks
 
