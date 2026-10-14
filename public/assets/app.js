@@ -153,7 +153,7 @@
     return captchaLoading;
   }
   async function ensureCaptcha(kind) {
-    if (!config.formsEnabled) throw new Error('This form is currently unavailable. Please try again later or use Help in the FirstLane app.');
+    if (!config.formsEnabled) throw new Error('This form is currently unavailable. Email support@getfirstlane.com for help, including an account-deletion request.');
     const turnstile = await loadCaptcha();
     if (!captchaWidgets.has(kind)) {
       const node = $(`[data-captcha="${kind}"]`);
@@ -181,7 +181,7 @@
   function prepareForm(form, kind, messageNode) {
     if (!form) return;
     if (!config.formsEnabled) {
-      status(messageNode, 'This form is currently unavailable. Please try again later or use Help in the FirstLane app.');
+      status(messageNode, 'This form is currently unavailable. Email support@getfirstlane.com for help, including an account-deletion request.');
       $('[type="submit"]', form).disabled = true;
       return;
     }

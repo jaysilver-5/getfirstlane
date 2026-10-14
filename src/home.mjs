@@ -8,6 +8,7 @@ export function home() { return `
  <div class="hero-copy"><div class="eyebrow"><span class="status-dot"></span> ONTARIO G1 PREP, AT YOUR PACE</div>
  <h1 id="hero-title">Get road<br><em>ready.</em></h1>
  <p class="hero-description">Less second-guessing. More understanding.<br>Meet FirstLane—the calmer way to prepare for your Ontario G1.</p>
+ <p class="hero-note">Independent study only. FirstLane does not represent a government agency and is not affiliated with MTO or DriveTest. No licences, applications, test bookings or government fees.</p>
  ${stores('hero')}
  <p class="hero-note">${icon('check')} 40 questions free <span class="dot-separator">·</span> ${priceLabel} to unlock Ontario once</p>
  <a class="text-link hero-discover" href="#how">A little practice goes a long way <span>↓</span></a>
@@ -57,7 +58,7 @@ export function home() { return `
  </div>
 </section>
 <section class="section wrap details-section"><div class="section-heading centered"><div class="eyebrow">A LITTLE MORE THOUGHT IN EVERY DETAIL</div><h2>Made for real life.<br><em>Not just test day.</em></h2></div><div class="detail-grid">
- <article class="detail-card" data-reveal><div class="detail-icon">${icon('wifi')}</div><h3>Take your practice with you.</h3><p>Download your Ontario pack and study offline. Connect again for syncing, updates and access checks.</p><span class="card-tag">OFFLINE STUDY WITH COMPLETE</span></article>
+ <article class="detail-card" data-reveal><div class="detail-icon">${icon('wifi')}</div><h3>Take your practice with you.</h3><p>Download your Ontario pack and study offline. Reconnect at least every 30 days to refresh offline access, and for syncing and updates.</p><span class="card-tag">OFFLINE STUDY WITH COMPLETE</span></article>
  <article class="detail-card" data-reveal><div class="detail-icon peach">${icon('heart')}</div><h3>A calmer place to learn.</h3><p>Short sessions, clear language and a gentle pace. Make a mistake, understand it, and try again.</p><span class="card-tag">PROGRESS WITHOUT THE PRESSURE</span></article>
  <article class="detail-card" data-reveal><div class="detail-icon lavender">${icon('shield')}</div><h3>Your account. Your choice.</h3><p>Plain-language privacy information, purchase help and a clear route to delete your account.</p><a class="text-link" href="privacy.html">Your privacy, explained ${icon('arrowUp')}</a></article>
  </div></section>
