@@ -1,5 +1,6 @@
+import { pricingSection } from './pricing.mjs';
 import { readFileSync } from 'node:fs';
-import { icon, stores, faq, commonFAQ } from './shared.mjs';
+import { icon, webActions, faq, commonFAQ } from './shared.mjs';
 import { priceLabel } from '../lib/config.mjs';
 const journey = readFileSync(new URL('./journey.html',import.meta.url),'utf8');
 const ticks = list => `<ul class="feature-list">${list.map(t=>`<li>${icon('check')}<span>${t}</span></li>`).join('')}</ul>`;
@@ -7,10 +8,10 @@ export function home() { return `
 <section class="hero wrap" aria-labelledby="hero-title">
  <div class="hero-copy"><div class="eyebrow"><span class="status-dot"></span> ONTARIO G1 PREP, AT YOUR PACE</div>
  <h1 id="hero-title">Get road<br><em>ready.</em></h1>
- <p class="hero-description">Less second-guessing. More understanding.<br>Meet FirstLane—the calmer way to prepare for your Ontario G1.</p>
+ <p class="hero-description">Less second-guessing. More understanding.<br>Meet FirstLane—the calmer way to prepare for your Ontario G1, in your browser.</p>
  <p class="hero-note">Independent study only. FirstLane does not represent a government agency and is not affiliated with MTO or DriveTest. No licences, applications, test bookings or government fees.</p>
- ${stores('hero')}
- <p class="hero-note">${icon('check')} 40 questions free <span class="dot-separator">·</span> ${priceLabel} to unlock Ontario once</p>
+ ${webActions()}
+ <p class="hero-note">${icon('check')} At web launch: 40 questions free <span class="dot-separator">·</span> ${priceLabel} once + applicable tax for Complete</p>
  <a class="text-link hero-discover" href="#how">A little practice goes a long way <span>↓</span></a>
  </div>
  <div class="hero-scene" aria-label="FirstLane’s welcome screen and road artwork">
@@ -58,15 +59,11 @@ export function home() { return `
  </div>
 </section>
 <section class="section wrap details-section"><div class="section-heading centered"><div class="eyebrow">A LITTLE MORE THOUGHT IN EVERY DETAIL</div><h2>Made for real life.<br><em>Not just test day.</em></h2></div><div class="detail-grid">
- <article class="detail-card" data-reveal><div class="detail-icon">${icon('wifi')}</div><h3>Take your practice with you.</h3><p>Download your Ontario pack and study offline. Reconnect at least every 30 days to refresh offline access, and for syncing and updates.</p><span class="card-tag">OFFLINE STUDY WITH COMPLETE</span></article>
+ <article class="detail-card" data-reveal><div class="detail-icon">${icon('wifi')}</div><h3>Take your practice with you.</h3><p>The web app is designed for your phone, tablet or computer, with account-based study progress. An internet connection is required.</p><span class="card-tag">WEB STUDY AT LAUNCH</span></article>
  <article class="detail-card" data-reveal><div class="detail-icon peach">${icon('heart')}</div><h3>A calmer place to learn.</h3><p>Short sessions, clear language and a gentle pace. Make a mistake, understand it, and try again.</p><span class="card-tag">PROGRESS WITHOUT THE PRESSURE</span></article>
  <article class="detail-card" data-reveal><div class="detail-icon lavender">${icon('shield')}</div><h3>Your account. Your choice.</h3><p>Plain-language privacy information, purchase help and a clear route to delete your account.</p><a class="text-link" href="privacy.html">Your privacy, explained ${icon('arrowUp')}</a></article>
  </div></section>
-<section id="pricing" class="pricing-section section"><div class="wrap"><div class="section-heading centered"><div class="eyebrow">04 / ONE LESS THING TO THINK ABOUT</div><h2>Your next chapter.<br><em>Not another subscription.</em></h2><p>Start free. Unlock Ontario once. Learn at your pace.</p></div>
- <div class="pricing-grid"><article class="price-card free-card" data-reveal><span class="price-tag">A GOOD PLACE TO START</span><h3>FirstLane Free</h3><div class="price"><span class="currency">CA$</span>0<span class="price-period">to get going</span></div><p>Get a feel for FirstLane before you decide.</p>${ticks(['10 guest questions before signing up','40 fixed questions with a free account','Explanations and sample review','Saved free progress','No trial expiry or payment details'])}<a href="#download" class="button outline">Start with FirstLane Free ${icon('arrowUp')}</a></article>
- <article class="price-card complete-card" data-reveal><div class="complete-tag">THE FULL ONTARIO PACK ${icon('spark')}</div><h3>Ontario G1 Complete</h3><div class="price"><span class="currency">CA$</span>14<span class="price-decimal">.99</span></div><div class="once-label"><span class="status-dot"></span> One payment. No automatic renewal.</div><p>A fuller study toolkit, ready when you are.</p>${ticks(['The Ontario practice pack','Focused topics and full mock sessions','Mistake review and bookmarks','Downloaded offline study','No scheduled expiry on your Ontario pack'])}<a href="#download" class="button lime">Get FirstLane. Unlock in the app. ${icon('arrowUp')}</a><p class="price-fine">Purchase through Apple or Google. Final price and any tax are shown before payment. Future jurisdictions are separate purchases.</p></article></div>
- <div class="pricing-reassurance"><span>${icon('lock')} Store-handled payments</span><span>${icon('refresh')} Purchase-restoration support</span><span>${icon('check')} No web checkout</span></div>
- </div></section>
+${pricingSection()}
 <section class="independence wrap"><div class="independence-icon">${icon('flag')}</div><div><div class="eyebrow">CONFIDENCE, WITHOUT THE BIG CLAIMS</div><h2>Your study companion.<br>Not a licensing service.</h2></div><p>FirstLane is independent Ontario G1 preparation. We are not affiliated with MTO or DriveTest. We do not issue licences, submit applications, book tests or appointments, collect government fees, provide official exam questions, or promise a pass.</p></section>
 <section id="faq" class="section wrap faq-section"><div class="faq-heading"><div class="eyebrow">GOOD QUESTIONS. CLEAR ANSWERS.</div><h2>A little clarity<br><em>before you start.</em></h2><p>Still wondering about something?</p><a class="text-link" href="support.html">Let’s get it sorted ${icon('arrowUp')}</a></div>${faq(commonFAQ)}</section>
-<section id="download" class="download-section wrap"><div class="download-card"><div class="download-content"><div class="eyebrow">GET ROAD READY.</div><h2>The road ahead<br><em>looks good on you.</em></h2><p>Start with a little practice. See where it takes you.</p>${stores('bottom',true)}<span class="download-note">40 questions free · ${priceLabel} one-time Ontario unlock</span></div><div class="download-road" aria-hidden="true"><img src="assets/road.svg" width="480" height="280" alt="" loading="lazy"></div><div class="download-stamp" aria-hidden="true">LET’S<br>GO <span>↗</span></div></div></section>`; }
+<section id="download" class="download-section wrap"><div class="download-card"><div class="download-content"><div class="eyebrow">GET ROAD READY.</div><h2>The road ahead<br><em>looks good on you.</em></h2><p>Start with a little practice. See where it takes you.</p>${webActions(true)}<span class="download-note">Planned web offer: 40 questions free · ${priceLabel} once + applicable tax</span></div><div class="download-road" aria-hidden="true"><img src="assets/road.svg" width="480" height="280" alt="" loading="lazy"></div><div class="download-stamp" aria-hidden="true">LET’S<br>GO <span>↗</span></div></div></section>`; }

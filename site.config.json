@@ -3,7 +3,7 @@
   "tagline": "Get road ready.",
   "siteUrl": "https://getfirstlane.com",
   "operatorDisplayName": "FirstLane",
-  "operatorLegalName": "",
+  "operatorLegalName": "Tervlon Labs Limited",
   "businessAddress": "",
   "publisherLegalName": "",
   "publisherDisclosure": "",
@@ -11,12 +11,29 @@
   "privacyEmail": "privacy@getfirstlane.com",
   "appStoreUrl": "",
   "googlePlayUrl": "",
-  "price": { "amount": 14.99, "currency": "CAD", "type": "one_time" },
-  "effectiveDate": "2026-10-06",
+  "price": {
+    "amount": 14.99,
+    "currency": "CAD",
+    "type": "one_time"
+  },
+  "effectiveDate": "2026-10-23",
   "minimumAge": 16,
   "turnstileSiteKey": "",
-  "providers": { "websiteHost": "", "authenticationEmail": "", "supportEmail": "Resend", "processingCountries": "" },
-  "retention": { "deletionDays": null, "backupDays": null, "securityLogDays": null, "supportMonths": null, "transactionYears": null, "transactionPurpose": "", "processorDeletionDays": null },
+  "providers": {
+    "websiteHost": "Vercel",
+    "authenticationEmail": "Clerk",
+    "supportEmail": "Resend",
+    "processingCountries": ""
+  },
+  "retention": {
+    "deletionDays": null,
+    "backupDays": null,
+    "securityLogDays": null,
+    "supportMonths": null,
+    "transactionYears": null,
+    "transactionPurpose": "",
+    "processorDeletionDays": null
+  },
   "governingLaw": "",
   "approvals": {
     "legalPoliciesReviewed": false,
@@ -28,5 +45,8 @@
     "deletionEndToEndTested": false,
     "rateLimitsAndMonitoringEnabled": false,
     "nativePrivacyDisclosuresMatch": false
-  }
+  },
+  "operatorCountry": "Nigeria",
+  "webAppUrl": "https://app.getfirstlane.com",
+  "webAppAvailable": false
 }

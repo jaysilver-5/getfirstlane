@@ -30,9 +30,10 @@ const assets = {
 // Do not publish duplicate unversioned executable assets.
 rmSync(path.join(out,'assets/styles.css')); rmSync(path.join(out,'assets/app.js'));
 const definitions = [
- ['', 'FirstLane — Get road ready.', 'A calmer way to prepare for your Ontario G1. Start with 40 free questions in FirstLane and unlock Ontario G1 Complete for CA$14.99, once.', home],
+ ['', 'FirstLane — Get road ready.', 'A calmer way to prepare for your Ontario G1. Try five sample questions now. Planned web offer: 40 free questions and Ontario G1 Complete for CA$14.99 once, plus applicable tax.', home],
  ['privacy','Privacy policy — FirstLane','How FirstLane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
  ['terms','Terms of service — FirstLane','Terms for FirstLane’s independent Ontario G1 preparation app and CA$14.99 one-time Ontario purchase.',pages.terms],
+ ['pricing','Pricing — FirstLane','Planned FirstLane free access and Ontario G1 Complete for CA$14.99 once plus applicable tax, through Paddle at web launch.',pages.pricing],
  ['refunds','Refund policy — FirstLane','Refund eligibility and purchase help for FirstLane web payments through Paddle, operated by Tervlon Labs Limited.',pages.refunds],
  ['support','Support — FirstLane','Get help with your FirstLane account, purchase restoration, practice questions, privacy or deletion.',pages.support],
  ['delete-account','Delete your FirstLane account','Verify ownership and request permanent deletion of your FirstLane account without reinstalling the app.',pages.deletion],
@@ -42,7 +43,7 @@ const definitions = [
 for (const [slug,title,description,render] of definitions) {
  let html = layout({title,description,body:render(),slug,active:slug,assets,noindex:!production||slug==='404'});
  // A 404 can be served at an arbitrarily deep URL. Its assets and navigation must still resolve.
- if (slug==='404') html=html.replace(/(href|src)="(assets\/|index\.html|privacy\.html|terms\.html|refunds\.html|support\.html|delete-account\.html|cookies\.html)/g,'$1="/$2');
+ if (slug==='404') html=html.replace(/(href|src)="(assets\/|index\.html|privacy\.html|terms\.html|pricing\.html|refunds\.html|support\.html|delete-account\.html|cookies\.html)/g,'$1="/$2');
  write((slug||'index')+'.html',html);
 }
 write('robots.txt',production ? `User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${config.siteUrl}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n');
