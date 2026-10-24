@@ -40,6 +40,8 @@
     "operatorAndPublisherVerified": false,
     "retentionAndProcessorsVerified": false,
     "contentAndFeatureClaimsReviewed": false,
+    "webAppEndToEndTested": false,
+    "paddleCheckoutVerified": false,
     "nativePriceAndStoreLinksVerified": false,
     "supportDeliveryTested": false,
     "deletionEndToEndTested": false,
