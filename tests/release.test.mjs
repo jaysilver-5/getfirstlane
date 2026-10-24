@@ -3,6 +3,20 @@ import {config,releaseIssues,publicConfig} from '../lib/config.mjs';import {env}
 function complete(){const c=structuredClone(config);Object.assign(c,{siteUrl:env.SITE_ORIGIN,operatorLegalName:'Synthetic Operator Limited',businessAddress:'Synthetic test address, not a real disclosure',publisherLegalName:'Synthetic Publisher Limited',publisherDisclosure:'Synthetic fixture only',governingLaw:'Synthetic reviewed provision',supportEmail:env.SUPPORT_TO_EMAIL,privacyEmail:'privacy@getfirstlane.com',appStoreUrl:'https://apps.apple.com/ca/app/firstlane/id1234567890',googlePlayUrl:'https://play.google.com/store/apps/details?id=com.firstlane.synthetic',turnstileSiteKey:'0x_synthetic_nonproduction_key'});for(const k of Object.keys(c.providers))c.providers[k]='Synthetic provider';for(const k of Object.keys(c.retention))c.retention[k]=k==='transactionPurpose'?'Synthetic retention purpose':30;for(const k of Object.keys(c.approvals))c.approvals[k]=true;return c;}
 test('delivered configuration intentionally blocks production',()=>assert.ok(releaseIssues(config,{}).length>20));
 test('a structurally complete synthetic configuration passes the configuration validator',()=>assert.deepEqual(releaseIssues(complete(),env),[]));
+
+test('web-only release retains web acceptance without requiring native listings or retired Supabase auth',()=>{
+ const c=complete();Object.assign(c,{appStoreUrl:'',googlePlayUrl:'',publisherLegalName:'',publisherDisclosure:''});
+ c.approvals.nativePriceAndStoreLinksVerified=false;c.approvals.nativePrivacyDisclosuresMatch=false;
+ const webEnv={...env};delete webEnv.SUPABASE_URL;delete webEnv.SUPABASE_PUBLIC_KEY;
+ assert.deepEqual(releaseIssues(c,webEnv),[]);
+ for(const key of ['webAppEndToEndTested','paddleCheckoutVerified']){
+  const pending=structuredClone(c);pending.approvals[key]=false;
+  assert.ok(releaseIssues(pending,webEnv).some(issue=>issue.includes(key)));
+ }
+ c.appStoreUrl='https://apps.apple.com/ca/app/firstlane/id1234567890';
+ const issues=releaseIssues(c,webEnv).join('\n');
+ assert.match(issues,/publisherLegalName/);assert.match(issues,/nativePriceAndStoreLinksVerified/);
+});
 test('old price, USD currency or subscription cannot pass',()=>{for(const price of [{amount:12.99,currency:'CAD',type:'one_time'},{amount:14.99,currency:'USD',type:'one_time'},{amount:14.99,currency:'CAD',type:'subscription'}]){const c=complete();c.price=price;assert.ok(releaseIssues(c,env).some(x=>x.includes('14.99')));}});
 test('missing approvals, provider or retention objects cannot bypass the gate',()=>{for(const field of ['approvals','providers','retention']){const c=complete();delete c[field];assert.ok(releaseIssues(c,env).length>0);}});
 test('unsafe URLs and fake listing links are rejected',()=>{for(const update of [{siteUrl:'https://example.com'},{siteUrl:'http://getfirstlane.com'},{appStoreUrl:'https://apps.apple.com/ca/app/firstlane'},{googlePlayUrl:'https://play.google.com/store/apps/details'}]){const c={...complete(),...update};assert.ok(releaseIssues(c,env).length>0);}});
