@@ -9,7 +9,7 @@ export function createAccountHandler({ env = process.env } = {}) {
       validateOrigin(req, env);
       return reply(res, 410, {
         message: 'Account controls have moved to the FirstLane web app. Sign in there to manage or delete your account.',
-        accountUrl: new URL('/account', config.webAppUrl).href,
+        accountUrl: new URL('account', config.webAppUrl + '/').href,
       });
     } catch (error) { return safeError(res, error); }
   };

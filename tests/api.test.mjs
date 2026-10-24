@@ -16,7 +16,7 @@ test('retired account actions cannot send codes, authenticate or delete via Supa
  for(const action of ['send-code','verify-code','delete','signout','unknown']){
   const m=fetchSequence(new Error('No upstream call is allowed'));
   const r=await invoke(account(m),{action,confirmation:'DELETE',email:send.email},authorized());
-  assert.equal(r.statusCode,410);assert.equal(r.data.accountUrl,'https://app.getfirstlane.com/account');
+  assert.equal(r.statusCode,410);assert.equal(r.data.accountUrl,'https://getfirstlane.com/app/account');
   assert.equal(r.data.deleted,undefined);assert.equal(r.data.sent,undefined);assert.equal(r.data.accessToken,undefined);assert.equal(m.calls.length,0);
  }
 });
