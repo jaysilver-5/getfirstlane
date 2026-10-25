@@ -30,15 +30,15 @@ const assets = {
 // Do not publish duplicate unversioned executable assets.
 rmSync(path.join(out,'assets/styles.css')); rmSync(path.join(out,'assets/app.js'));
 const definitions = [
- ['', 'FirstLane — Get road ready.', 'A calmer way to prepare for your Ontario G1. Create your free account for 40 practice questions, clear explanations and saved progress. No card needed.', home],
- ['privacy','Privacy policy — FirstLane','How FirstLane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
- ['terms','Terms of service — FirstLane','Terms for FirstLane’s independent Ontario G1 preparation app and CA$14.99 one-time Ontario purchase.',pages.terms],
- ['pricing','Pricing — FirstLane','Start with 40 free Ontario G1 practice questions. Explore FirstLane Free and the planned CA$14.99 one-time Complete upgrade, plus applicable tax.',pages.pricing],
- ['refunds','Refund policy — FirstLane','Refund eligibility and purchase help for FirstLane web payments through Paddle, operated by Tervlon Labs Limited.',pages.refunds],
- ['support','Support — FirstLane','Get help with your FirstLane account, purchase restoration, practice questions, privacy or deletion.',pages.support],
+ ['', 'FirstLane - Get road ready.', 'A calmer way to prepare for your Ontario G1. Create your free account for 40 practice questions, clear explanations and saved progress. No card needed.', home],
+ ['privacy','Privacy policy - FirstLane','How FirstLane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
+ ['terms','Terms of service - FirstLane','Terms for FirstLane’s independent Ontario G1 preparation app and CA$14.99 one-time Ontario purchase.',pages.terms],
+ ['pricing','Pricing - FirstLane','Start with 40 free Ontario G1 practice questions. Explore FirstLane Free and the planned CA$14.99 one-time Complete upgrade, plus applicable tax.',pages.pricing],
+ ['refunds','Refund policy - FirstLane','Refund eligibility and purchase help for FirstLane web payments through Paddle, operated by Tervlon Labs Limited.',pages.refunds],
+ ['support','Support - FirstLane','Get help with your FirstLane account, purchase restoration, practice questions, privacy or deletion.',pages.support],
  ['delete-account','Delete your FirstLane account','Verify ownership and request permanent deletion of your FirstLane account without reinstalling the app.',pages.deletion],
- ['cookies','Cookies & preferences — FirstLane','Manage website motion preferences and understand the limited storage used on the FirstLane website.',pages.cookies],
- ['404','Page not found — FirstLane','This page is not here. Return to FirstLane and get road ready.',pages.notFound]
+ ['cookies','Cookies & preferences - FirstLane','Manage website motion preferences and understand the limited storage used on the FirstLane website.',pages.cookies],
+ ['404','Page not found - FirstLane','This page is not here. Return to FirstLane and get road ready.',pages.notFound]
 ];
 for (const [slug,title,description,render] of definitions) {
  let html = layout({title,description,body:render(),slug,active:slug,assets,noindex:!production||slug==='404'});
@@ -52,4 +52,4 @@ write('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http:/
 // A static host can apply these headers, but its API functions must be deployed separately.
 write('_headers','/*\n'+Object.entries(securityHeaders).map(([k,v])=>'  '+k+': '+v).join('\n')+'\n  Cache-Control: no-cache\n/api/*\n  Cache-Control: no-store\n  Referrer-Policy: no-referrer\n');
 const emitted = readdirSync(path.join(out,'assets'));
-console.log(`Built ${definitions.length} HTML pages and ${emitted.length} assets into dist/.\nMode: ${production?'PUBLIC RELEASE':'SAFE PRE-LAUNCH — no search indexing; missing live services fail safely'}.\nOffer: CA$14.99 one-time.`);
+console.log(`Built ${definitions.length} HTML pages and ${emitted.length} assets into dist/.\nMode: ${production?'PUBLIC RELEASE':'SAFE PRE-LAUNCH - no search indexing; missing live services fail safely'}.\nOffer: CA$14.99 one-time.`);
