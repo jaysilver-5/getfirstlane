@@ -9,3 +9,9 @@ The header, hero, free pricing card, sample follow-up, final section and footer 
 Validation: local build and all 37 Node tests pass, including the exact structured-data CSP hash, the app proxy's namespace, purchase disclosures and inactive support services. Browser checks at actual 320- and 390-CSS-pixel widths show no horizontal overflow on the homepage or pricing page. Mobile navigation exposes signup and sign-in. All five sample answers, the completion message, signup follow-up and reset work. Production signup and plan pages render; no account was created and no payment was submitted by this work.
 
 Generated `dist/` files are rebuilt by Vercel from these sources. No advertising or analytics trackers were introduced. Conversion uplift has not been measured.
+
+## Responsive button follow-up - 25 October 2026
+
+Replaced em dashes in landing-site prose, page titles and social metadata with normal sentence punctuation or hyphens. All nine rendered HTML pages were scanned and contain no em dashes. The global button size is now 48 pixels on larger screens and main mobile actions are 44 pixels tall with intrinsic widths. The sample action is an underlined secondary link with a 44-pixel tap area. Pricing, sample follow-up, final-section and reset actions no longer stretch across their containers unnecessarily. Direct signup and plan destinations are preserved.
+
+Local build and all 37 tests pass. Browser checks on the homepage and pricing page at actual 320, 390 and 768 CSS pixels show no horizontal page overflow or clipped button text. At 320 pixels the primary hero action measures 197 by 44 pixels, compared with the previously stretched 52-pixel-high button.
