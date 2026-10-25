@@ -53,3 +53,38 @@
 @media(max-width:600px){.quiz-question{padding:20px 17px}.quiz-question legend{font-size:14px;padding:0 4px}.quiz-option{font-size:12px}.quiz-summary{align-items:flex-start;flex-direction:column}.quiz-summary .button{width:100%}.sample-intro h2{font-size:36px}}
 
 .pricing-page{padding-top:46px}.pricing-page .page-heading{padding-block:0 12px}.pricing-page .page-heading h1,.pricing-page .page-heading>p{margin-inline:auto}.pricing-page .page-heading{margin-bottom:24px}.pricing-page .policy-intro{max-width:948px;margin:0 auto 26px}.pricing-page .pricing-reassurance~p{max-width:948px;margin:20px auto;font-size:13px;line-height:1.8}
+
+/* Make account creation the clear next step at every decision point. */
+.nav-sign-in{font-size:13px;font-weight:650;white-space:nowrap}
+.conversion-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero .conversion-actions{margin-top:26px}
+.conversion-actions .button{min-height:52px;padding:15px 22px;font-size:14px;white-space:normal;text-align:center}
+.cta-reassurance{margin-top:13px;font-size:12px;line-height:1.7;color:var(--muted)}
+.hero .conversion-disclosure{display:block;max-width:460px;margin-top:20px;font-size:11px;line-height:1.8}
+.download-card .cta-reassurance{color:#d5dfcb;max-width:450px;font-size:12px}
+.download-card .conversion-actions{margin-top:22px}
+.download-card .outline-light{color:var(--paper);border:1px solid #85947d;background:transparent}
+.download-note a,.price-fine a{text-decoration:underline;text-underline-offset:3px}
+.sample-next-step{display:grid;gap:16px;padding:26px;border:1px solid #c4d4af;border-radius:18px;background:#edf3e3}
+.sample-next-step h3{font-size:23px;letter-spacing:-.6px}
+.sample-next-step p{font-size:14px;line-height:1.8;margin-top:8px}
+.sample-next-step>.button{justify-self:start;min-height:52px}
+.sample-next-step>span{font-size:12px;color:var(--muted)}
+.price-card .plan-availability{padding:14px 16px;border:1px solid #bccba8;border-radius:12px;font-size:13px;line-height:1.7}
+.price-card .feature-list{flex:1}
+.price-card .button{width:100%;justify-content:center}
+@media(max-width:1000px){.nav-sign-in{display:none}}
+@media(max-width:600px){
+ .header-inner{gap:8px}.nav-actions{gap:8px}.nav-cta{font-size:11px;padding:11px 10px;white-space:nowrap}.nav-cta>.icon{display:none}
+ .hero .hero-description{font-size:14px;line-height:1.8;margin-top:20px}
+ .hero .conversion-actions{margin-top:22px;gap:10px;flex-direction:column}
+ .hero .conversion-actions .button{width:100%;min-height:52px;font-size:14px}
+ .hero .cta-reassurance{font-size:11px;line-height:1.7;margin-top:12px}
+ .hero .conversion-disclosure{font-size:10px;margin-top:18px;max-width:none}
+ .download-card .conversion-actions{flex-direction:column;gap:10px}
+ .download-card .conversion-actions .button{width:100%;min-height:50px;font-size:13px}
+ .download-card .cta-reassurance{max-width:none;font-size:11px}
+ .download-card .download-note{font-size:12px}
+ .sample-next-step{padding:23px 20px}.sample-next-step>.button{width:100%;font-size:13px}.sample-next-step h3{font-size:22px}
+}
+@media(max-width:360px){.header-inner .brand{font-size:21px;gap:7px}.header-inner .brand img{width:28px;height:28px}.menu-toggle{width:30px}}
