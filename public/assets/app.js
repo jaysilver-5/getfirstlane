@@ -92,7 +92,7 @@
         feedback.classList.toggle('needs-review', !correct);
         const answered = questions.filter(item => item.dataset.answered === 'true').length;
         const total = questions.filter(item => $('.quiz-option.correct', item)).length;
-        score.textContent = answered === questions.length ? `${total} of ${questions.length} correct. Review the explanations, then try again.` : `${answered} of ${questions.length} answered.`;
+        score.textContent = answered === questions.length ? `${total} of ${questions.length} correct. Keep learning with 40 free questions and saved progress.` : `${answered} of ${questions.length} answered.`;
       }));
     });
     sampleQuiz.addEventListener('reset', () => requestAnimationFrame(() => {

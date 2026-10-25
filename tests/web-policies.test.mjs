@@ -5,15 +5,16 @@ import { createHash } from 'node:crypto';
 const root = new URL('../', import.meta.url);
 const read = file => readFileSync(new URL(file, root), 'utf8');
 
-test('homepage and pricing disclose the same future offer and have no unavailable app/payment links', () => {
+test('homepage and pricing offer direct free signup while preserving the paid availability notice', () => {
  for (const page of ['index','pricing']) {
   const html = read(`dist/${page}.html`);
-  assert.match(html, /Web launch in preparation/);
   assert.match(html, /paid purchases are not yet open/i);
   assert.match(html, /CA\$14\.99 is the Canadian-dollar base price/);
   assert.match(html, /plus applicable tax/);
   assert.match(html, /40 free questions in total/);
-  assert.match(html, /requires content approval before public sale/);
+  assert.match(html, /href="\/app\/auth\/sign-up"/);
+  assert.match(html, /href="\/app\/plans"/);
+  assert.doesNotMatch(html, /href="refunds.html" class="button/);
   assert.match(html, /Keep going practice until you choose to finish/);
   assert.match(html, /href="index.html#practice-sample"/);
   assert.doesNotMatch(html, /href="https:\/\/app\.getfirstlane\.com|No web checkout|Purchase through Apple or Google|OFFLINE STUDY WITH COMPLETE/);
@@ -47,13 +48,13 @@ test('inactive forms and account controls accurately match the privacy policy', 
  assert.match(support, /website contact form is not currently available/);
  assert.match(support, /mailto:support@getfirstlane.com/);
  assert.doesNotMatch(support, /id="support-form"/);
- assert.match(account, /public FirstLane web app is not open for account creation yet/);
+ assert.match(account, /href="https:\/\/getfirstlane.com\/app\/account"/);
  assert.doesNotMatch(account, /delete-email-form|delete-code-form|href="https:\/\/app.getfirstlane.com/);
  for (const file of readdirSync(new URL('dist/assets/',root)).filter(x=>x.endsWith('.js'))) {
   assert.doesNotMatch(read('dist/assets/'+file), /\/api\/account|send-code|verify-code/);
  }
  const config=JSON.parse(read('site.config.json'));
- assert.equal(config.webAppAvailable,false);
+ assert.equal(config.webAppAvailable,true);
  for(const value of Object.values(config.approvals))assert.equal(value,false);
 });
 
