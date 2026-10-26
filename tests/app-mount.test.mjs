@@ -18,7 +18,12 @@ test('app URLs use the approved main domain and include the account mount', () =
 
 test('only the app namespace is proxied and marketing CSP stays scoped to marketing', () => {
   const host = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
-  assert.deepEqual(host.rewrites.map(rule => rule.source), ['/app', '/app/:path*']);
+  assert.deepEqual(host.rewrites.map(rule => rule.source), [
+    '/app/_vercel/insights/:path*', '/app/_vercel/speed-insights/:path*', '/app', '/app/:path*',
+  ]);
+  assert.deepEqual(host.rewrites.slice(0, 2).map(rule => new URL(rule.destination).pathname), [
+    '/_vercel/insights/:path*', '/_vercel/speed-insights/:path*',
+  ]);
   for (const rule of host.rewrites) assert.equal(new URL(rule.destination).hostname, 'project-n8lqe.vercel.app');
   const marketingHeaders = host.headers.find(rule => rule.headers.some(header => header.key === 'Content-Security-Policy'));
   const applies = new RegExp('^' + marketingHeaders.source + '$');
