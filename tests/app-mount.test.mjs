@@ -11,7 +11,7 @@ test('app URLs use the approved main domain and include the account mount', () =
   try {
     config.webAppAvailable = true;
     assert.match(webActions(), /href="\/app\/auth\/sign-up"/);
-    assert.match(webActions(), /Create my free account/);
+    assert.match(webActions(), /Get my 40 free questions/);
     assert.match(webActions(), /href="index.html#practice-sample"/);
   } finally { config.webAppAvailable = prior; }
 });
