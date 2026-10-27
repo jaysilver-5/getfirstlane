@@ -6,8 +6,8 @@ const ticks = list => `<ul class="feature-list">${list.map(t=>`<li>${icon('check
 export function home() { return `
 <section class="hero wrap" aria-labelledby="hero-title">
  <div class="hero-copy"><div class="eyebrow"><span class="status-dot"></span> ONTARIO G1 PREP, AT YOUR PACE</div>
- <h1 id="hero-title">Get road<br><em>ready.</em></h1>
- <p class="hero-description">Prepare for your Ontario G1 with clear explanations, road signs and road rules. Create your free account to practise 40 questions and save your progress.</p>
+ <h1 id="hero-title">40 free<br><em>questions.</em></h1>
+ <p class="hero-description">Sign up and verify your email to get 40 free Ontario G1 practice questions, clear explanations and saved progress. No payment required.</p>
  ${webActions()}
  <p class="hero-note conversion-disclosure">Independent study only. Not affiliated with MTO or DriveTest. No licences, applications, test bookings, government fees or pass guarantees.</p>
  </div>
@@ -21,7 +21,7 @@ export function home() { return `
    <div class="scene-spark one" aria-hidden="true">✦</div><div class="scene-spark two" aria-hidden="true">✦</div>
  </div>
 </section>
-<div class="principles-band"><div class="wrap principles"><span>${icon('book')} Understand the why</span><span>${icon('clock')} Practise at your pace</span><span>${icon('refresh')} Learn from mistakes</span><span>${icon('lock')} One payment. No renewals.</span></div></div>
+<div class="principles-band"><div class="wrap principles"><span>${icon('book')} Understand the why</span><span>${icon('clock')} Practise at your pace</span><span>${icon('refresh')} Learn from mistakes</span><span>${icon('lock')} 40 questions. No payment.</span></div></div>
 <section id="how" class="section wrap">
  <div class="section-heading split-heading"><div><div class="eyebrow">01 / FIND YOUR RHYTHM</div><h2>Less overwhelm.<br><em>More “I’ve got this.”</em></h2></div><p>You don’t need another endless list of questions. You need a little direction and a reason to keep going.</p></div>
  <div class="steps-grid">
@@ -41,7 +41,7 @@ export function home() { return `
 </section>
 <section id="practice-sample" class="practice-sample section" aria-labelledby="practice-sample-title">
  <div class="wrap sample-layout">
-  <div class="sample-intro"><div class="eyebrow">03 / TRY A SHORT STUDY SESSION</div><h2 id="practice-sample-title">Five questions.<br><em>Clear explanations.</em></h2><p>Try an original FirstLane learning activity in your browser. These are practice prompts, not official or live exam questions, and the result is not a prediction of your G1 result.</p><a class="text-link" href="https://www.ontario.ca/document/official-mto-drivers-handbook/signs" target="_blank" rel="noopener noreferrer">Check the current Ontario handbook ${icon('arrowUp')}</a></div>
+  <div class="sample-intro"><div class="eyebrow">03 / PREVIEW BEFORE YOU SIGN UP</div><h2 id="practice-sample-title">A quick preview.<br><em>Five questions.</em></h2><p>This is just a five-question preview. Sign up for 40 free practice questions, with no payment required. These are practice prompts, not official or live exam questions, and the result is not a prediction of your G1 result.</p><a class="text-link" href="https://www.ontario.ca/document/official-mto-drivers-handbook/signs" target="_blank" rel="noopener noreferrer">Check the current Ontario handbook ${icon('arrowUp')}</a></div>
   <form class="sample-quiz" id="sample-quiz">
    ${[
     ['A red, eight-sided sign marked STOP means:', ['Slow down only if traffic is nearby','Come to a complete stop','Stop only when another vehicle is visible'], 1, 'A STOP sign requires a complete stop. Check that the way is clear before proceeding.'],
@@ -51,7 +51,7 @@ export function home() { return `
     ['An official bicycle-route sign tells drivers to:', ['Expect cyclists and share the road','Use the sidewalk','Treat the whole road as bicycle-only'], 0, 'The sign alerts drivers that cyclists may be present; it does not by itself exclude motor vehicles.']
    ].map((q,i)=>`<fieldset class="quiz-question" data-question><legend><span>${String(i+1).padStart(2,'0')}</span>${q[0]}</legend><div class="quiz-options">${q[1].map((answer,j)=>`<button type="button" class="quiz-option" data-correct="${j===q[2]}">${answer}</button>`).join('')}</div><p class="quiz-feedback" data-feedback hidden>${q[3]}</p></fieldset>`).join('')}
    <div class="quiz-summary" aria-live="polite"><div><span class="eyebrow">YOUR PRACTICE RESULT</span><strong id="quiz-score">Answer all five when you’re ready.</strong></div><button type="reset" class="button outline" id="quiz-reset">Try again</button></div>
-   <div class="sample-next-step"><div><h3>Keep your practice going.</h3><p>Create a free account for 40 questions, clear explanations and saved progress.</p></div><a class="button dark" href="/app/auth/sign-up">Create my free account ${icon('arrow')}</a><span>No card needed. Free access has no time limit.</span></div>
+   <div class="sample-next-step"><div><h3>Ready for 40 free questions?</h3><p>Sign up and verify your email for the full free question set, clear explanations and saved progress.</p></div><a class="button dark" href="/app/auth/sign-up">Get my 40 free questions ${icon('arrow')}</a><span>No payment required. Free access has no time limit.</span></div>
    <p class="quiz-source">Learning content is based on the current Ontario driver’s handbook. FirstLane is independent and is not affiliated with MTO or DriveTest.</p>
   </form>
  </div>
@@ -64,4 +64,4 @@ export function home() { return `
 ${pricingSection()}
 <section class="independence wrap"><div class="independence-icon">${icon('flag')}</div><div><div class="eyebrow">CONFIDENCE, WITHOUT THE BIG CLAIMS</div><h2>Your study companion.<br>Not a licensing service.</h2></div><p>FirstLane is independent Ontario G1 preparation. We are not affiliated with MTO or DriveTest. We do not issue licences, submit applications, book tests or appointments, collect government fees, provide official exam questions, or promise a pass.</p></section>
 <section id="faq" class="section wrap faq-section"><div class="faq-heading"><div class="eyebrow">GOOD QUESTIONS. CLEAR ANSWERS.</div><h2>A little clarity<br><em>before you start.</em></h2><p>Still wondering about something?</p><a class="text-link" href="support.html">Let’s get it sorted ${icon('arrowUp')}</a></div>${faq(commonFAQ)}</section>
-<section id="download" class="download-section wrap"><div class="download-card"><div class="download-content"><div class="eyebrow">YOUR NEXT STEP</div><h2>Ready for your<br><em>first session?</em></h2><p>Create your free account, verify your email and start practising Ontario G1 road rules and signs.</p>${webActions(true)}<span class="download-note">Already have an account? <a href="/app/auth/sign-in">Sign in</a></span></div><div class="download-road" aria-hidden="true"><img src="assets/road.svg" width="480" height="280" alt="" loading="lazy"></div><div class="download-stamp" aria-hidden="true">LET’S<br>GO <span>↗</span></div></div></section>`; }
+<section id="download" class="download-section wrap"><div class="download-card"><div class="download-content"><div class="eyebrow">YOUR NEXT STEP</div><h2>Ready for your<br><em>first session?</em></h2><p>Sign up and verify your email to get 40 free Ontario G1 practice questions. No payment required.</p>${webActions(true)}<span class="download-note">Already have an account? <a href="/app/auth/sign-in">Sign in</a></span></div><div class="download-road" aria-hidden="true"><img src="assets/road.svg" width="480" height="280" alt="" loading="lazy"></div><div class="download-stamp" aria-hidden="true">LET’S<br>GO <span>↗</span></div></div></section>`; }

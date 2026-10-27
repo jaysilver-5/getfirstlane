@@ -30,7 +30,7 @@ const assets = {
 // Do not publish duplicate unversioned executable assets.
 rmSync(path.join(out,'assets/styles.css')); rmSync(path.join(out,'assets/app.js'));
 const definitions = [
- ['', 'FirstLane - Get road ready.', 'A calmer way to prepare for your Ontario G1. Create your free account for 40 practice questions, clear explanations and saved progress. No card needed.', home],
+ ['', 'FirstLane - Get road ready.', 'Sign up for 40 free Ontario G1 practice questions, clear explanations and saved progress. Verify your email and start practising. No payment required.', home],
  ['privacy','Privacy policy - FirstLane','How FirstLane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
  ['terms','Terms of service - FirstLane','Terms for FirstLane’s independent Ontario G1 preparation app and CA$14.99 one-time Ontario purchase.',pages.terms],
  ['pricing','Pricing - FirstLane','Start with 40 free Ontario G1 practice questions. Explore FirstLane Free and the planned CA$14.99 one-time Complete upgrade, plus applicable tax.',pages.pricing],
