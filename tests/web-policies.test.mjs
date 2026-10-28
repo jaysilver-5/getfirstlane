@@ -30,7 +30,7 @@ test('public policies identify the actual company/country, web providers and Pad
   assert.match(html, /Tervlon Labs Limited/);
   assert.match(html, /registered in Nigeria/);
   assert.match(html, /Ontario learners in Canada/);
-  assert.match(html, page === 'privacy' ? /October 26, 2026/ : /October 23, 2026/);
+  assert.match(html, page === 'privacy' ? /October 28, 2026/ : /October 23, 2026/);
   assert.doesNotMatch(html, /Operator details will be published|Store publisher and seller details will be confirmed|Supabase handles authentication|RevenueCat|Purchases take place inside the app through Apple or Google/);
  }
  const terms=read('dist/terms.html'), privacy=read('dist/privacy.html');
