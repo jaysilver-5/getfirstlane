@@ -109,7 +109,7 @@
     }));
   }
 
-  // No advertising/analytics SDK is installed. Store links work as ordinary links.
+  // Google Ads initialization and consent controls are in google-tag.js.
   // Form requests use same-origin, authenticated server handlers. No privileged keys in this file.
   function status(node, text, error = false) {
     if (!node) return;

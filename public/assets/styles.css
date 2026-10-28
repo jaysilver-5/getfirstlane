@@ -93,3 +93,5 @@
  .quiz-summary .button{width:fit-content;min-height:44px;padding:10px 14px}
 }
 @media(max-width:360px){.header-inner .brand{font-size:21px;gap:7px}.header-inner .brand img{width:28px;height:28px}.menu-toggle{width:30px}}
+
+.ads-consent{position:fixed;z-index:100;bottom:16px;left:16px;right:16px;max-width:920px;margin:auto;padding:20px;background:var(--cream,#f6f5ef);color:#17382d;border:1px solid #bdc9b3;border-radius:16px;box-shadow:0 6px 30px #17382d26;display:flex;align-items:center;gap:24px}.ads-consent[hidden]{display:none}.ads-consent strong{font-size:16px}.ads-consent p{font-size:12px;line-height:1.6;margin:8px 0 0}.ads-consent a{text-decoration:underline}.ads-consent-actions{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0}.ads-consent-actions .button{min-height:44px;font-size:12px;padding:12px 16px}@media(max-width:700px){.ads-consent{flex-direction:column;align-items:stretch;gap:14px;max-height:70vh;overflow:auto}.ads-consent-actions .button{flex:1}}@media print{.ads-consent{display:none}}

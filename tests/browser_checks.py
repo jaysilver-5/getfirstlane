@@ -17,6 +17,8 @@ def document(page='index',javascript=True):
    el=s.new_tag('style');el.string=(root/'dist'/link['href'].lstrip('/')).read_text();link.replace_with(el)
   elif link.get('href','').startswith(('assets/','/assets/')):link.decompose()
  for script in s.find_all('script',src=True):
+  if script['src'].startswith(('https://','http://')):
+   script.decompose();continue  # Provider calls are excluded from isolated rendering.
   code=(root/'dist'/script['src'].lstrip('/')).read_text();script.decompose()
   if javascript:
    el=s.new_tag('script');el.string=code;s.body.append(el)

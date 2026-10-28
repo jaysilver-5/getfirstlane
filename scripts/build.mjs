@@ -23,12 +23,13 @@ const hashed = (name,extension,body) => {
  const filename = `assets/${name}.${hash}.${extension}`; write(filename,body); return filename;
 };
 const assets = {
+ googleTag: hashed('google','js',readFileSync(path.join(root,'public/assets/google-tag.js'),'utf8')),
  css: hashed('styles','css',readFileSync(path.join(root,'public/assets/styles.css'),'utf8')),
  js: hashed('app','js',readFileSync(path.join(root,'public/assets/app.js'),'utf8')),
  config: hashed('site','js','window.FIRSTLANE = Object.freeze('+JSON.stringify(publicConfig()).replace(/</g,'\\u003c')+');\n')
 };
 // Do not publish duplicate unversioned executable assets.
-rmSync(path.join(out,'assets/styles.css')); rmSync(path.join(out,'assets/app.js'));
+rmSync(path.join(out,'assets/google-tag.js')); rmSync(path.join(out,'assets/styles.css')); rmSync(path.join(out,'assets/app.js'));
 const definitions = [
  ['', 'FirstLane - Get road ready.', 'Sign up for 40 free Ontario G1 practice questions, clear explanations and saved progress. Verify your email and start practising. No payment required.', home],
  ['privacy','Privacy policy - FirstLane','How FirstLane handles account details, study progress, purchases, support messages and privacy requests.',pages.privacy],
