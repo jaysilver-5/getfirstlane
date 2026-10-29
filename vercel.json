@@ -6,6 +6,14 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/app/:path*",
+      "has": [{ "type": "host", "value": "getfirstlane.vercel.app" }],
+      "destination": "https://www.getfirstlane.com/app/:path*",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/app/_vercel/insights/:path*", "destination": "https://project-n8lqe.vercel.app/_vercel/insights/:path*" },
     { "source": "/app/_vercel/speed-insights/:path*", "destination": "https://project-n8lqe.vercel.app/_vercel/speed-insights/:path*" },
