@@ -6,7 +6,7 @@ import {createSurveyHandler} from '../api/survey.js';
 import {createFeedbackHandler} from '../survey-backend/handler.mjs';
 import {invoke,json,fetchSequence} from './helpers.mjs';
 const id='ce61c37c-6623-4bb6-82f1-f12f57cda2ea';
-const answers={stage:'tried',blocker:'value',friction:['none'],priceView:'unclear',platform:'phone_web'};
+const answers={stage:'tried',blocker:['value'],friction:['none'],priceView:'unclear',platform:'phone_web'};
 const payload={id,version:SURVEY_VERSION,answers};
 const request=(body=payload,headers={})=>new Request('https://edge.example/feedback',{method:'POST',headers:{Origin:'https://getfirstlane.com','Content-Type':'application/json',...headers},body:JSON.stringify(body)});
 const env=name=>({SUPABASE_URL:'https://project.example',SUPABASE_SERVICE_ROLE_KEY:'server-only-test-key'}[name]);
@@ -16,11 +16,18 @@ test('survey branches distinguish price, friction and mobile without carrying hi
   assert.ok(activeQuestions(price).some(q=>q.id==='priceRange'));
   const mobile={...answers,platform:'android'};
   assert.ok(activeQuestions(mobile).some(q=>q.id==='mobileNeed'));
-  const paid={...price,stage:'paid',blocker:'mobile',friction:['none'],priceRange:'under_5',mobileNeed:['access']};
+  const paid={...price,stage:'paid',blocker:['mobile'],friction:['none'],priceRange:'under_5',mobileNeed:['access']};
   const keys=activeQuestions(paid).map(q=>q.id);
   for(const key of ['blocker','priceView','priceRange','mobileNeed']) assert.ok(!keys.includes(key),key);
   const clean=cleanAnswers(paid);
   for(const key of ['blocker','priceView','priceRange','mobileNeed']) assert.equal(clean[key],undefined);
+});
+test('multiple upgrade blockers are retained and activate both technical and mobile follow-ups',()=>{
+  const combined={...answers,blocker:['price','error','mobile']};
+  const keys=activeQuestions(combined).map(q=>q.id);
+  assert.ok(keys.includes('issueDetails'));assert.ok(keys.includes('mobileNeed'));
+  assert.deepEqual(cleanAnswers({...combined,mobileNeed:['offline']}).blocker,['price','error','mobile']);
+  assert.throws(()=>cleanAnswers({...answers,blocker:[]}));
 });
 test('survey validates required choices, mutually exclusive problems, lengths and email',()=>{
   assert.deepEqual(cleanAnswers(answers),answers);

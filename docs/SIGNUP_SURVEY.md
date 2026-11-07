@@ -5,7 +5,7 @@ Public route: https://getfirstlane.com/survey (also works on www). No signup, ac
 ## What it answers
 
 1. How much of the product the respondent actually used.
-2. Their single biggest upgrade blocker, before mentioning a price.
+2. All reasons that have held them back from upgrading, before mentioning a price.
 3. Friction across sign-in, practice, progress, phone layout and checkout; optional description only when relevant.
 4. Perceived value of CA$14.99 once, with a conditional optional price range for price/budget objections.
 5. Preferred study platform, followed by the practical benefit they want from an installed app.
@@ -23,7 +23,7 @@ from public.survey_feedback
 order by received_at;
 ```
 
-Start with counts of `answers->>'blocker'`, then read each respondent's stage, friction, price view, platform and written feedback together. With eight invited signups, report counts and individual patterns rather than market percentages. Price preferences are stated intentions, not proof that lowering the price will produce purchases. An app preference alone is not proof that an app will increase paid conversion.
+Start with counts of the values in the `answers->'blocker'` array, then read each respondent's stage, friction, price view, platform and written feedback together. Respondents can select multiple reasons, so blocker counts can add up to more than the number of responses. With eight invited signups, report counts and individual patterns rather than market percentages. Price preferences are stated intentions, not proof that lowering the price will produce purchases. An app preference alone is not proof that an app will increase paid conversion.
 
 ## Implementation
 
