@@ -76,8 +76,10 @@ test('saved consent is applied before config and storage failure still permits a
   assert.equal(blocked.banner.hidden, true);
 });
 
-test('all generated pages load one tag after synchronous consent setup and both hosts allow it', () => {
-  for (const file of readdirSync(new URL('dist/', root)).filter(file => file.endsWith('.html'))) {
+test('marketing pages load one tag after synchronous consent setup; survey stays free of advertising tags', () => {
+  const survey = readFileSync(new URL('dist/survey.html', root), 'utf8');
+  assert.doesNotMatch(survey, /googletagmanager|google-tag|data-ads-consent|gtag\(/);
+  for (const file of readdirSync(new URL('dist/', root)).filter(file => file.endsWith('.html') && file !== 'survey.html')) {
     const html = readFileSync(new URL(`dist/${file}`, root), 'utf8');
     const setup = html.match(/<script src="([^"]*assets\/google\.[a-f0-9]{12}\.js)"><\/script>/);
     assert.ok(setup, file);
