@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import account from '../api/account.js';
 import support from '../api/support.js';
+import survey from '../api/survey.js';
 import { securityHeaders } from '../lib/security.mjs';
 const root = path.resolve(fileURLToPath(new URL('../dist/',import.meta.url)));
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.ico':'image/x-icon','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8'};
@@ -15,6 +16,7 @@ export function createServer(){return http.createServer(async (req,res)=>{
   const pathname = decodeURIComponent(url.pathname);
   if (pathname==='/api/account') return await account(req,res);
   if (pathname==='/api/support') return await support(req,res);
+  if (pathname==='/api/survey') return await survey(req,res);
   if (!['GET','HEAD'].includes(req.method)) {res.writeHead(405,{'Allow':'GET, HEAD'}); return res.end('Method not allowed.');}
   // Public files only. Never expose source, config, environment files, QA or support messages.
   const relative = pathname==='/'?'index.html':pathname.slice(1);
