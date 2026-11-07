@@ -8,7 +8,7 @@ export const questions = [
     ['paid', 'I already paid for Complete'],
     ['not_sure', 'I don’t remember / something else']
   ] },
-  { id: 'blocker', title: 'What is the main reason you haven’t upgraded?', hint: 'Pick the biggest reason, even if a few apply.', when: a => a.stage !== 'paid', options: [
+  { id: 'blocker', title: 'What has held you back from upgrading?', hint: 'Select all that apply.', multiple: true, when: a => a.stage !== 'paid', options: [
     ['not_tried', 'I haven’t had enough time to try it'],
     ['free_enough', 'The free questions are enough for now'],
     ['price', 'The price is more than I want to pay'],
@@ -32,7 +32,7 @@ export const questions = [
     ['payment', 'Opening checkout or completing payment'],
     ['other', 'Something else']
   ] },
-  { id: 'issueDetails', title: 'What happened, and what were you trying to do?', hint: 'Optional. A page name or error message is helpful. Please don’t include passwords or payment details.', kind: 'textarea', when: a => a.blocker === 'error' || a.blocker === 'unavailable' || (a.friction || []).some(v => !['none', 'not_used'].includes(v)) },
+  { id: 'issueDetails', title: 'What happened, and what were you trying to do?', hint: 'Optional. A page name or error message is helpful. Please don’t include passwords or payment details.', kind: 'textarea', when: a => (a.blocker || []).some(v => ['error','unavailable'].includes(v)) || (a.friction || []).some(v => !['none', 'not_used'].includes(v)) },
   { id: 'priceView', title: 'How do you feel about the price?', hint: 'Ontario G1 Complete is listed at CA$14.99 once, plus applicable tax. It includes 500 practice questions, topic practice, mock tests, and mistake review. No subscription.', when: a => a.stage !== 'paid', options: [
     ['fair', 'It seems fair for what’s included'],
     ['high', 'It’s more than I would pay'],
@@ -47,7 +47,7 @@ export const questions = [
   { id: 'platform', title: 'Where would you prefer to study?', hint: 'Choose the way you would actually use most.', options: [
     ['phone_web', 'In my phone’s browser'], ['desktop_web', 'In a computer or tablet browser'], ['ios', 'In an iPhone app'], ['android', 'In an Android app'], ['either', 'Browser or app — either works for me'], ['not_sure', 'I’m not sure yet']
   ] },
-  { id: 'mobileNeed', title: 'What would an installed app improve for you?', hint: 'Select all that apply.', multiple: true, when: a => ['ios', 'android'].includes(a.platform) || a.blocker === 'mobile', options: [
+  { id: 'mobileNeed', title: 'What would an installed app improve for you?', hint: 'Select all that apply.', multiple: true, when: a => ['ios', 'android'].includes(a.platform) || (a.blocker || []).includes('mobile'), options: [
     ['access', 'Easier to find and open again'], ['offline', 'Practice without an internet connection'], ['reminders', 'Study reminders'], ['experience', 'A smoother experience on my phone'], ['trust', 'I feel more comfortable using an app from an app store'], ['preference', 'I simply prefer installed apps'], ['other', 'Something else']
   ] },
   { id: 'improvement', title: 'What one change would make FirstLane more useful to you?', hint: 'Optional. Tell us what would make the biggest difference.', kind: 'textarea' },
